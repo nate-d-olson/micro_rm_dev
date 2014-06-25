@@ -6,7 +6,7 @@
 REF=$input1
 
 ref_index = { 
-	exec "bwa index -a is $REF"
+	exec "~/bin/ls bwa index -a is $REF"
 }
 
 @Transform("sam")
@@ -22,7 +22,7 @@ align = {
 
 @Transform("bam")
 convert = {
-	exec "samtools view -bSh -o $output $input"
+	exec "~/bin/tmap samtools view -bSh -o $output $input"
 }
 
 
