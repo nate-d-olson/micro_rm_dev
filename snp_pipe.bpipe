@@ -1,0 +1,80 @@
+// Generic pipeline for performing variant calling.
+// Author: Nate Olson
+// Date Created: June 25, 2015
+// input is the referece fasta and the forward and reverse fastq files
+
+REF=$input1
+
+ref_index = { 
+	exec "bwa index -a is $REF"
+}
+
+@Transform("sam")
+align = {
+	exec """
+		~/bin/bwa mem 
+			-t 7 
+			-R '@RG\tID:0\tLB:1\tPU:LT2\tPL:Illumina\tSM:LT2' 
+			$REF 
+			$input2 $input3> $output
+	"""
+}
+
+@Transform("bam")
+convert = {
+	exec "samtools view -bSh -o $output $input"
+}
+
+
+@Filter("sort")
+sort = {
+	exec """ 
+		java -Xmx16g -jar ~/bin/SortSam.jar 
+			I= $input 
+			O= $output
+			SO=coordinate
+	"""
+}
+
+@Transform("bam.bai")
+index = {
+	exec "samtools index $input"
+	forward input
+}
+
+@Filter("realign")
+indel_realign = {
+	exec """
+		java -Xmx16g -jar ~/bin/GenomeAnalysisTK.jar 
+			-R $REF 
+			-I $input 
+			-T RealignerTargetCreator 
+			-nt 7
+			-o ${input}.intervals
+	"""
+	exec """
+		java -Xmx16g -jar ~/bin/GenomeAnalysisTK.jar 
+			-R $REF 
+			-I $input 
+			-T IndelRealigner 
+			-targetIntervals ${input}.intervals 
+			-o $output
+	"""
+}
+
+@Transform("vcf")
+call_variants = {
+	exec """
+		java -Xmx16g -jar ~/bin/GenomeAnalysisTK.jar 
+			-R $REF 
+			-I $input 
+			-T UnifiedGenotyper 
+			-glm BOTH
+			-nt 7 
+			-o $output
+	"""
+}
+
+Bpipe.run {
+	align + convert + sort + index + indel_realign + index + call_variants
+}
