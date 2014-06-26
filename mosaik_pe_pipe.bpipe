@@ -7,7 +7,7 @@ REF="CFSAN008157.HGAP.fasta"
 
 @Transform("mkb")
 build_ref = {
-    exec "~/MOSAIK/bin/MosaikBuild -fr $REF"
+    exec "~/MOSAIK/bin/MosaikBuild -fr $REF -oa $outfile"
 }
 
 
@@ -15,8 +15,8 @@ build_ref = {
 build_reads = {
     exec """
         ~/MOSAIK/bin/MosaikBuild 
-        -q  $input1
-        -q2 $input2 
+        -q  $input1.fastq
+        -q2 $input2.fastq 
         -st illumina 
         -out $output
     """
