@@ -22,7 +22,6 @@ build_reads = {
     """
 }
 
-@Transform("mosaik.bam")
 align = {
     exec """
         ~/MOSAIK/bin/MosaikAligner 
