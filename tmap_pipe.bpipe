@@ -1,4 +1,4 @@
-// bpipe segment for mapping single end reads
+// bpipe segment for mapping single end reads with tmap mapall
 // Author: Nate Olson
 // Date Created: June 26, 2015
 // input is the referece fasta and the forward and reverse fastq files
