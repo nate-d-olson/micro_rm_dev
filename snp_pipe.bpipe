@@ -14,7 +14,7 @@ align = {
 	exec """
 		~/bwa/bwa mem 
 		    -t 2
-			-R '@RG\tID:0\tLB:1\tPU:LT2\tPL:Illumina\tSM:LT2' 
+			-R '@RG\tLB:1\tPU:LT2\tPL:Illumina\tSM:LT2' 
 			$REF 
 			$input1 $input2> $output
 	"""

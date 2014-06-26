@@ -5,9 +5,9 @@
 
 REF="CFSAN008157.HGAP.fasta"
 
-@Transform("mkb")
+@Transform("dat")
 build_ref = {
-    exec "~/MOSAIK/bin/MosaikBuild -fr $REF -oa $outfile"
+    exec "~/MOSAIK/bin/MosaikBuild -fr $REF -oa $output"
 }
 
 
