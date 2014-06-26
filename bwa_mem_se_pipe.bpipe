@@ -9,7 +9,7 @@ ref_index = {
 	exec "~/bwa/bwa index -a is $REF"
 }
 
-@Transform("sam")
+@Transform("bwa.sam")
 align = {
 	exec """
 		~/bwa/bwa mem 

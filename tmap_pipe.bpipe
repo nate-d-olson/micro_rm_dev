@@ -9,7 +9,7 @@ ref_index = {
 	exec "~/bin/tmap index -f $REF"
 }
 
-@Transform("bam")
+@Transform("tmap.bam")
 align = {
 	exec """
 		~/bin/tmap mapall 
