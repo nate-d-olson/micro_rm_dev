@@ -13,7 +13,7 @@ ref_index = {
 align = {
 	exec """
 		~/bwa/bwa mem 
-			-t 7 
+		    -t 2
 			-R '@RG\tID:0\tLB:1\tPU:LT2\tPL:Illumina\tSM:LT2' 
 			$REF 
 			$input1 $input2> $output
@@ -29,7 +29,7 @@ convert = {
 @Filter("sort")
 sort = {
 	exec """ 
-		java -Xmx16g -jar ~/bin/SortSam.jar 
+		java -Xmx2g -jar ~/bin/SortSam.jar 
 			I= $input 
 			O= $output
 			SO=coordinate
@@ -45,15 +45,15 @@ index = {
 @Filter("realign")
 indel_realign = {
 	exec """
-		java -Xmx16g -jar ~/bin/GenomeAnalysisTK.jar 
+		java -Xmx2g -jar ~/bin/GenomeAnalysisTK.jar 
 			-R $REF 
 			-I $input 
 			-T RealignerTargetCreator 
-			-nt 7
+			-nt 1
 			-o ${input}.intervals
 	"""
 	exec """
-		java -Xmx16g -jar ~/bin/GenomeAnalysisTK.jar 
+		java -Xmx2g -jar ~/bin/GenomeAnalysisTK.jar 
 			-R $REF 
 			-I $input 
 			-T IndelRealigner 
@@ -65,16 +65,15 @@ indel_realign = {
 @Transform("vcf")
 call_variants = {
 	exec """
-		java -Xmx16g -jar ~/bin/GenomeAnalysisTK.jar 
+		java -Xmx2g -jar ~/bin/GenomeAnalysisTK.jar 
 			-R $REF 
 			-I $input 
 			-T UnifiedGenotyper 
 			-glm BOTH
-			-nt 7 
+			-nt 1 
 			-o $output
 	"""
 }
 
 Bpipe.run {
-	ref_index + align + convert + sort + index + indel_realign + index + call_variants
-}
+	ref_index + align + convert + sort + index + indel_realign 
