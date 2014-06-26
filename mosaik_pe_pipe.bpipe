@@ -1,17 +1,17 @@
-// bpipe segment for mapping single end reads with MOSAIK
+// bpipe segment for mapping paired end reads with MOSAIK
 // Author: Nate Olson
 // Date Created: June 26, 2015
 // input is the referece fasta and the forward and reverse fastq files
 
 REF="CFSAN008157.HGAP.fasta"
 
-@Transform("dat")
+@Transform("mkb")
 build_ref = {
     exec "~/MOSAIK/bin/MosaikBuild -fr $REF -oa $output"
 }
 
-
-@Transform("mkb")
+// note to improve performance pass mean fragment length as mfl
+@Transform("dat")
 build_reads = {
     exec """
         ~/MOSAIK/bin/MosaikBuild 
@@ -34,7 +34,7 @@ align = {
 	"""
 }
 
-mosaik_seg = segment {
+mosaik_pe_seg = segment {
   build_ref + build_reads + align
 }
 

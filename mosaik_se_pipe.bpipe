@@ -5,29 +5,37 @@
 
 REF="CFSAN008157.HGAP.fasta"
 
+@Transform("dat")
 build_ref = {
-    exec "~/MOSAKIC/
-ref_index = { 
-	exec "~/bin/tmap index -f $REF"
+    exec "~/MOSAIK/bin/MosaikBuild -fr $REF -oa $output"
 }
 
-@Transform("tmap.bam")
+@Transform("mkb")
+build_reads = {
+    exec """
+        ~/MOSAIK/bin/MosaikBuild 
+        -q  $input1.fastq
+        -st illumina 
+        -out $output
+    """
+}
+
+@Transform("mosaik.bam")
 align = {
-	exec """
-		~/bin/tmap mapall 
-		    -f $REF
-		    -r $input
-		    -v
-		    -o 1
-		    stage1 map1 stage2 map2 stage3 map3
-		    > $output
+    exec """
+        ~/MOSAIK/bin/MosaikAligner 
+        -in $input
+        -out $output
+        -ia $input.dat 
+        -annpe ~/MOSAIK/src/networkFile/2.1.26.pe.100.0065.ann 
+        -annse ~/MOSAIK/src/networkFile/2.1.26.se.100.005.ann
 	"""
 }
 
-tmap_seg = segment {
-  ref_index + align
+mosaik_se_seg = segment {
+  build_ref + build_reads + align
 }
 
 Bpipe.run {
-  tmap_seg
+  mosaik_se_seg
 }

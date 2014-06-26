@@ -25,10 +25,10 @@ convert = {
 	exec "~/bin/samtools view -bSh -o $output $input"
 }
 
-bwa_pe_seg = segment {
+bwa_se_seg = segment {
   ref_index + align + convert
 }
 
 Bpipe.run {
-  bwa_pe_seg
+  bwa_se_seg
 }
