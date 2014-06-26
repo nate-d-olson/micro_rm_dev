@@ -35,9 +35,9 @@ align = {
 }
 
 mosaik_seg = segment {
-  ref_index + align
+  build_ref + build_reads + align
 }
 
 Bpipe.run {
-  tmap_seg
+  mosaik_seg
 }
