@@ -38,7 +38,7 @@ sort = {
 
 @Transform("bam.bai")
 index = {
-	exec "samtools index $input"
+	exec "~/bin/tmap samtools index $input"
 	forward input
 }
 
