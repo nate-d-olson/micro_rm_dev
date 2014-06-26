@@ -22,7 +22,7 @@ align = {
 
 @Transform("bam")
 convert = {
-	exec "~/bin/tmap samtools view -bSh -o $output $input"
+	exec "~/bin/samtools view -bSh -o $output $input"
 }
 
 
@@ -38,7 +38,7 @@ sort = {
 
 @Transform("bam.bai")
 index = {
-	exec "~/bin/tmap samtools index $input"
+	exec "~/bin/samtools index $input"
 	forward input
 }
 
@@ -76,4 +76,4 @@ call_variants = {
 }
 
 Bpipe.run {
-	ref_index + align + convert + sort + index + indel_realign 
+	ref_index + align + convert + sort + index + indel_realign + index + call_variants } 
