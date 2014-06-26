@@ -13,7 +13,7 @@ ref_index = {
 align = {
 	exec """
 		~/bwa/bwa mem 
-		    -t 2 # default is only single thread
+		    -t 2
 			$REF 
 			$input1 $input2> $output
 	"""
