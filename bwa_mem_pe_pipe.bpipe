@@ -6,13 +6,13 @@
 REF="CFSAN008157.HGAP.fasta"
 
 ref_index = { 
-	exec "~/bin/bwa index -a is $REF"
+	exec "~/bwa/bwa index -a is $REF"
 }
 
 @Transform("sam")
 align = {
 	exec """
-		~/bin/bwa mem 
+		~/bwa/bwa mem 
 		    -t 2 # default is only single thread
 			$REF 
 			$input1 $input2> $output
