@@ -76,4 +76,4 @@ call_variants = {
 }
 
 Bpipe.run {
-	ref_index + align + convert + sort + index + indel_realign 
+	ref_index + align + convert + sort + index + indel_realign + index + call_variants } 
