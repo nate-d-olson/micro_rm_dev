@@ -7,7 +7,7 @@ REF="CFSAN008157.HGAP.fasta"
 
 @Transform("mkb")
 build_ref = {
-    exec "~/MOSAKIC/bin/MosaikBuild -fr $REF"
+    exec "~/MOSAIK/bin/MosaikBuild -fr $REF"
 }
 
 
