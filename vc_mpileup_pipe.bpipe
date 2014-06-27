@@ -1,0 +1,7 @@
+@Transform("vcf")
+call_variants_ = {
+	exec """
+		~/bin/samtools mpileup -uf $input.fasta $input.bam > ${input}.pileup
+		~/bin/bcftools view -vcg ${input}.pileup > $output
+	"""
+}

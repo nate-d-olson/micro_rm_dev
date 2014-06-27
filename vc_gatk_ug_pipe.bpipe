@@ -1,0 +1,11 @@
+@Transform("vcf")
+call_variants_ug = {
+	exec """
+		java -Xmx16g -jar ~/bin/GenomeAnalysisTK.jar 
+			-R $input.fasta
+			-I $input.bam 
+			-T UnifiedGenotyper 
+			-glm BOTH 
+			-o $output
+	"""
+}

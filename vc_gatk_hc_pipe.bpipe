@@ -1,0 +1,12 @@
+// need to workout how to define heap sizes
+@Transform("vcf")
+call_variants_gatk = {
+	exec """
+		java -Xmx16g -jar ~/bin/GenomeAnalysisTK.jar 
+			-R $input.fasta
+			-I $input.bam 
+			-T HaplotypeCaller 
+			-glm BOTH 
+			-o $output
+	"""
+}
