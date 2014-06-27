@@ -3,13 +3,12 @@
 // Date Created: June 26, 2015
 // input is the referece fasta and the forward and reverse fastq files
 
-REF="CFSAN008157.HGAP.fasta"
-
 @Transform("dat")
 build_ref = {
-    exec "~/MOSAIK/bin/MosaikBuild -fr $REF -oa $output"
+    exec "~/MOSAIK/bin/MosaikBuild -fr $input.fasta -oa $output"
 }
 
+// note to improve performance pass mean fragment length as mfl
 @Transform("mkb")
 build_reads = {
     exec """
@@ -20,6 +19,7 @@ build_reads = {
     """
 }
 
+@Transform("mosaik")
 align = {
     exec """
         ~/MOSAIK/bin/MosaikAligner 

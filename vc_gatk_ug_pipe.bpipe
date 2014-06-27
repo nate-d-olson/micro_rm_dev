@@ -1,3 +1,10 @@
+// bpipe segment for variant calling using GATK UnifiedGenotyper
+// Author: Nate Olson
+// Date Created: June 27, 2015
+// input is the referece fasta and bam file
+
+
+// need to workout how to define heap sizes
 @Transform("vcf")
 call_variants_ug = {
 	exec """

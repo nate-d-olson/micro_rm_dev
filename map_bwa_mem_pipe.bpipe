@@ -1,4 +1,4 @@
-// bpipe segment for mapping paried end reads with bwa mem
+// bpipe segment for mapping single end reads with bwa mem
 // Author: Nate Olson
 // Date Created: June 26, 2015
 // input is the referece fasta and the forward and reverse fastq files
@@ -9,13 +9,13 @@ ref_index = {
 	exec "~/bwa/bwa index -a is $REF"
 }
 
-@Transform("bwa.sam")
+@Transform("sam")
 align = {
 	exec """
 		~/bwa/bwa mem 
 		    -t 2
 			$REF 
-			$input1 $input2> $output
+			$input > $output
 	"""
 }
 
@@ -25,10 +25,10 @@ convert = {
 	exec "~/bin/samtools view -bSh -o $output $input"
 }
 
-bwa_pe_seg = segment {
+bwa_se_seg = segment {
   ref_index + align + convert
 }
 
 Bpipe.run {
-  bwa_pe_seg
+  bwa_se_seg
 }

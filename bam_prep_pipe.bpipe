@@ -1,3 +1,8 @@
+// bpipe segment for preparing bam files for variant calling
+// Author: Nate Olson
+// Date Created: June 27, 2015
+// input is the referece fasta and bam file
+
 // need to workout how to define heap sizes
 @Filter("sort")
 sort = {

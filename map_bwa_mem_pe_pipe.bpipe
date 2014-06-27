@@ -1,21 +1,19 @@
-// bpipe segment for mapping single end reads with bwa mem
+// bpipe segment for mapping paried end reads with bwa mem
 // Author: Nate Olson
-// Date Created: June 26, 2015
+// Date Created: June 27, 2015
 // input is the referece fasta and the forward and reverse fastq files
 
-REF="CFSAN008157.HGAP.fasta"
-
 ref_index = { 
-	exec "~/bwa/bwa index -a is $REF"
+	exec "~/bwa/bwa index -a is $input.fasta"
 }
 
-@Transform("sam")
+@Transform("bwa.sam")
 align = {
 	exec """
 		~/bwa/bwa mem 
 		    -t 2
-			$REF 
-			$input > $output
+			$input.fasta
+			$input1 $input2> $output
 	"""
 }
 
