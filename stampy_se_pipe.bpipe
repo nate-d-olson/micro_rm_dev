@@ -1,0 +1,34 @@
+// bpipe segment for mapping single end reads with stampy
+// Author: Nate Olson
+// Date Created: June 26, 2015
+// input is the referece fasta and the forward and reverse fastq files
+
+REF="CFSAN008157.HGAP.fasta"
+
+index_ref = {
+    exec"""
+        python ~/stampy-1.0.23/stampy.py -G LT2 $REF
+        python ~/stampy-1.0.23/stampy.py -g LT2 -H LT2
+    """
+}
+
+    
+
+
+
+align = {
+    exec """
+        python ~/stampy-1.0.23/stampy.py 
+            -g LT2 
+            -h LT2 
+            -M $input
+	"""
+}
+
+stampy_pe_seg = segment {
+  index_ref + align
+}
+
+Bpipe.run {
+  stampy_pe_seg
+}

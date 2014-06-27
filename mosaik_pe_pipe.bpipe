@@ -38,5 +38,5 @@ mosaik_pe_seg = segment {
 }
 
 Bpipe.run {
-  mosaik_seg
+  mosaik_pe_seg
 }
