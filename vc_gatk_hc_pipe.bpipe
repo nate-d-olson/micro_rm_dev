@@ -3,11 +3,13 @@
 // Date Created: June 27, 2015
 // input is the referece fasta and bam file
 
-// need to workout how to define heap sizes
+
+
+
 @Transform("vcf")
 call_variants_gatk = {
 	exec """
-		java -Xmx16g -jar ~/bin/GenomeAnalysisTK.jar 
+		java -Xmx4g -jar ~/bin/GenomeAnalysisTK.jar 
 			-R $input.fasta
 			-I $input.bam 
 			-T HaplotypeCaller 
@@ -15,3 +17,22 @@ call_variants_gatk = {
 			-o $output
 	"""
 }
+
+@Filter("sort")
+sort = {
+	exec """ 
+		java -Xmx2g -jar ~/bin/SortSam.jar 
+			I= $input 
+			O= $output
+			SO=coordinate
+	"""
+}
+
+@Transform("bam.bai")
+index = {
+	exec "~/bin/samtools index $input"
+	forward input
+}
+
+Bpipe.run {
+	sort + index + call_variants } 
