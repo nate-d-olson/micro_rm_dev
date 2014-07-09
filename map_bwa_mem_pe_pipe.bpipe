@@ -12,7 +12,7 @@ align = {
 	exec """
 		~/bwa/bwa mem 
 		    -t 2
-		    -R "@RG\tID:RM8375_V0\tLB:1\tPU:LT2\tPL:Illumina\tSM:LT2" 
+		    -R '@RG\tID:RM8375\tLB:1\tPU:LT2\tPL:Illumina\tSM:LT2" '
 			$input.fasta
 			$input1 $input2> $output
 	"""
@@ -24,10 +24,26 @@ convert = {
 	exec "~/bin/samtools view -bSh -o $output $input"
 }
 
+@Filter("sort")
+sort = {
+	exec """ 
+		java -Xmx16g -jar ~/bin/SortSam.jar 
+			I= $input 
+			O= $output
+			SO=coordinate
+	"""
+}
+
+@Transform("bam.bai")
+index = {
+	exec "samtools index $input"
+}
+
 bwa_pe_seg = segment {
-  ref_index + align + convert
+  ref_index + align + convert + sort + index
 }
 
 Bpipe.run {
   bwa_pe_seg
 }
+
