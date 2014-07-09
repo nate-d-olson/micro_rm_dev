@@ -1,0 +1,12 @@
+// bpipe segment for variant calling using samtools mpileup
+// Author: Nate Olson
+// Date Created: June 27, 2015
+// input is the referece fasta and bam file
+
+@Transform("vcf")
+call_variants_ = {
+	exec """
+		~/bin/samtools mpileup -uf $input.fasta $input.bam > ${input}.pileup
+		~/bin/bcftools view -vcg ${input}.pileup > $output
+	"""
+}

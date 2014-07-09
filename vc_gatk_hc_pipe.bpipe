@@ -1,0 +1,17 @@
+// bpipe segment for variant calling using GATK HaplotypeCaller
+// Author: Nate Olson
+// Date Created: June 27, 2015
+// input is the referece fasta and bam file
+
+// need to workout how to define heap sizes
+@Transform("vcf")
+call_variants_gatk = {
+	exec """
+		java -Xmx16g -jar ~/bin/GenomeAnalysisTK.jar 
+			-R $input.fasta
+			-I $input.bam 
+			-T HaplotypeCaller 
+			-glm BOTH 
+			-o $output
+	"""
+}

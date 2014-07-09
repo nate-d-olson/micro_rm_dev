@@ -1,0 +1,49 @@
+// bpipe segment for preparing bam files for variant calling
+// Author: Nate Olson
+// Date Created: June 27, 2015
+// input is the referece fasta and bam file
+
+// need to workout how to define heap sizes
+@Filter("sort")
+sort = {
+	exec """ 
+		java -Xmx16g -jar ~/bin/SortSam.jar 
+			I= $input.bam
+			O= $output
+			SO=coordinate
+	"""
+}
+
+@Transform("bam.bai")
+index = {
+	exec "samtools index $input"
+	forward input
+}
+
+@Filter("realign")
+indel_realign = {
+	exec """
+		java -Xmx16g -jar ~/bin/GenomeAnalysisTK.jar 
+			-R $input.fasta
+			-I $input 
+			-T RealignerTargetCreator 
+			-nt 7
+			-o ${input}.intervals
+	"""
+	exec """
+		java -Xmx16g -jar ~/bin/GenomeAnalysisTK.jar 
+			-R $input.fasta
+			-I $input 
+			-T IndelRealigner 
+			-targetIntervals ${input}.intervals 
+			-o $output
+	"""
+}
+
+bam_prep_realign = segment{
+	sort + index + indel_realign + index
+}
+
+bam_prep_norealign = segment{
+	sort + index
+}

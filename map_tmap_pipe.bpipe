@@ -3,18 +3,16 @@
 // Date Created: June 26, 2015
 // input is the referece fasta and the forward and reverse fastq files
 
-REF="CFSAN008157.HGAP.fasta"
-
 ref_index = { 
-	exec "~/bin/tmap index -f $REF"
+	exec "~/bin/tmap index -f $input.fasta"
 }
 
 @Transform("tmap.bam")
 align = {
 	exec """
 		~/bin/tmap mapall 
-		    -f $REF
-		    -r $input
+		    -f $input.fasta
+		    -r $input.fastq
 		    -v
 		    -o 1
 		    stage1 map1 stage2 map2 stage3 map3
