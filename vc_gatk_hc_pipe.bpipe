@@ -35,4 +35,4 @@ index = {
 }
 
 Bpipe.run {
-	sort + index + call_variants } 
+	sort + index + call_variants_gatk } 
