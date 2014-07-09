@@ -12,7 +12,6 @@ align = {
 	exec """
 		~/bwa/bwa mem 
 		    -t 2
-		    -R '@RG\tID:RM8375\tLB:1\tPU:LT2\tPL:Illumina\tSM:LT2\n'
 			$input.fasta
 			$input1 $input2> $output
 	"""
@@ -26,7 +25,7 @@ convert = {
 
 readGroups = {
     exec """
-        ~/picard-tools-1.15/AddOrReplaceReadGroups.jar 
+    ~/picard-tools-1.115/AddOrReplaceReadGroups.jar 
         INPUT=$input
         OUTPUT=$output
         RGID=1
