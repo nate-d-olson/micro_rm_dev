@@ -13,7 +13,6 @@ call_variants_gatk = {
 			-R $input.fasta
 			-I $input.bam 
 			-T HaplotypeCaller 
-			-glm BOTH 
 			-o $output
 	"""
 }
