@@ -1,0 +1,84 @@
+#script revisions for bam mpileups
+
+Note binaries and data files are in the downloads directory
+REF=~/Google\ Drive/NIST-Projects/micro\ RM/CFSAN008157.HGAP.fasta
+
+#remove duplicates
+
+samtools rmdup Ion001.bam Ion001.rd.bam
+
+
+#realign around indels
+java -Xmx4g -jar GenomeAnalysisTK.jar \
+   -T IndelRealigner \
+   -R $REF \
+   -I Ion001.rd.bam \
+   -o Ion001.rd.ir.bam
+
+#how to clean up bams with indels
+#option 1 - do not call indels
+
+mpileup option for stricter homopolymer 
+-h 50 
+minimum fraction of indels
+-F 0.01
+
+#python script to clean up vcf file
+#other???
+
+
+#testing
+# remove duplicates with -h 50 -F 0.01
+samtools-1.1/samtools rmdup Ion001.bam Ion001.rd.bam
+samtools-1.1/samtools mpileup -vu -F 0.01 -h 50 -f ~/Google\ Drive/NIST-Projects/micro\ RM/CFSAN008157.HGAP.fasta Ion001.rd.bam -o Ion001.vcf
+
+# removal duplicates with indel realignment with -h 50 and -F 0.01
+samtools-1.1/samtools index Ion001.rd.bam
+samtools rmdup Ion001.bam Ion001.rd.bam
+
+java -jar picard-tools-1.123/CreateSequenceDictionary.jar R=~/Google\ Drive/NIST-Projects/micro\ RM/CFSAN008157.HGAP.fasta O=~/Google\ Drive/NIST-Projects/micro\ RM/CFSAN008157.HGAP.dict
+
+java -Xmx2g -jar GenomeAnalysisTK.jar \
+-T RealignerTargetCreator \
+-R  ~/Google\ Drive/NIST-Projects/micro\ RM/CFSAN008157.HGAP.fasta\
+-I Ion001.rd.bam \
+-o forIndelRealigner.intervals
+
+java -Xmx4g -jar GenomeAnalysisTK.jar \
+   -T IndelRealigner \
+   -R ~/Google\ Drive/NIST-Projects/micro\ RM/CFSAN008157.HGAP.fasta\
+   -I Ion001.rd.bam \
+   -targetIntervals forIndelRealigner.intervals \
+   -o Ion001.rd.ir.bam
+
+higher -h
+samtools-1.1/samtools mpileup -vu -F 0.01 -h 50 -f ~/Google\ Drive/NIST-Projects/micro\ RM/CFSAN008157.HGAP.fasta Ion001.rd.ir.bam -o Ion001.ir.vcf
+did not run to completion - homopolymer error still present in vcf ... not completely sur they are errors though
+
+lower -h
+samtools-1.1/samtools mpileup -vu -F 0.01 -h 20 -f ~/Google\ Drive/NIST-Projects/micro\ RM/CFSAN008157.HGAP.fasta Ion001.rd.bam -o Ion001.20.vcf
+#more stringent setting for mpileup
+
+skipping indels
+samtools-1.1/samtools mpileup -vu -I -f ~/Google\ Drive/NIST-Projects/micro\ RM/CFSAN008157.HGAP.fasta Ion001.rd.ir.bam -o Ion001.noIndel.vcf
+
+Next step is to compare the resulting vcf files and generate a pipeline
+
+mpileup -h
+Coefficient for modeling homopolymer errors. Given an l-long homopolymer run, the sequencing error of an indel of size s is modeled as INT*s/l. [100]
+
+
+Pooled analysis 
+samtools-1.1/samtools mpileup -vu -I -f ~/Google\ Drive/NIST-Projects/micro\ RM/CFSAN008157.HGAP.fasta PGM/*bam -o RM8375-PGM.vcf
+
+Check out 
+vcflib
+usage: vcfleftalign [options] [file]
+
+options:
+    -r, --reference FILE  Use this reference as a basis for realignment.
+    -w, --window N        Use a window of this many bp when left aligning (150).
+
+Left-aligns variants in the specified input file or stdin.  Window size is determined
+dynamically according to the entropy of the regions flanking the indel.  These must have
+entropy > 1 bit/bp, or be shorter than ~5kb

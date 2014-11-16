@@ -11,4 +11,8 @@
 data/*
 
 #results
-*/results*
+analysis/bioinf/genome_structure/results
+
+#utilities
+utilities/patho_utils
+utilities/GenomeAnalysisTK.jar

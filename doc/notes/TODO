@@ -1,0 +1,6 @@
+TODO
+1. pathoscope MySQL database
+2. bwa mapping MiSeq
+	1. script includes metadata parsing
+3. variant calling pipeline
+4. organization and setting up github repositories
