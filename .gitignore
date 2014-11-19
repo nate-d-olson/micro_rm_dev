@@ -16,3 +16,4 @@ analysis/bioinf/genome_structure/results
 #utilities
 utilities/patho_utils
 utilities/GenomeAnalysisTK.jar
+utilities/pathoscope*

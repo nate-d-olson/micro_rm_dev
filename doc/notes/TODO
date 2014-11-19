@@ -4,3 +4,5 @@ TODO
 	1. script includes metadata parsing
 3. variant calling pipeline
 4. documentation
+5. change to not need sudo to start docker
+6. make sure software src code is in software directory
