@@ -17,3 +17,8 @@ analysis/bioinf/genome_structure/results
 utilities/patho_utils
 utilities/GenomeAnalysisTK.jar
 utilities/pathoscope*
+utilities/metAMOS*
+
+#filetypes
+*bt2
+*bz2

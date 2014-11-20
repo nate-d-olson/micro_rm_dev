@@ -1,0 +1,40 @@
+#setting up iMetAMOS
+install in utilities directory but running in docker
+
+wget https://github.com/marbl/metAMOS/archive/v1.5rc3.zip
+unzip v1.5rc3.zip
+
+key error for os.environ["SHELL"] - install in utilities from desktop
+
+Messages from running python INSTALL.py imetAMOS
+To make things easier for you, you may want to copy/symlink the following
+files into a directory in your PATH:
+  /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/kraken/bin/kraken
+  /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/kraken/bin/kraken-build
+  /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/kraken/bin/kraken-filter
+  /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/kraken/bin/kraken-mpa-report
+  /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/kraken/bin/kraken-report
+Could not import pysam, disabling.
+Could not import psutil, disabling.
+
+Kraken database download
+tar (child): minikraken.tgz: Cannot open: Timer expired
+tar (child): Error is not recoverable: exiting now
+tar: Child returned status 2
+tar: Error is not recoverable: exiting now
+mv: cannot stat ‘minikraken_*’: No such file or directory
+
+KronaTools install error
+syntax error at ./install.pl line 58, near ")"
+  (Might be a runaway multi-line () string starting on line 37)
+syntax error at ./install.pl line 80, near "}"
+Illegal declaration of subroutine main::createDir at ./install.pl line 89.
+
+SignalP is not installed and is required for Prokka's gram option. Please download it and add it to your path.
+had to download from DTU website using UMD email address
+
+no error when rerunning the install script
+
+error with Ray not MPI
+
+Issues with minikraken database - tried downloading multiple times and still received an error regarding opening the database.

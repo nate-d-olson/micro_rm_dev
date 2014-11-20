@@ -1,0 +1,77 @@
+## Objective setup MySQL database for pathoscope
+
+need to install PySQLdb - python packages
+http://sourceforge.net/projects/mysql-python/
+
+
+Approach
+1. docker run -v `pwd`/micro_rm_dev -t -i micro_rm /bin/bash 
+1. install MySQL in docker - command line
+	1. apt-get install -y mysql-server libmysqlclient-dev python-dev python-setuptools
+	2. when prompted during install entered the password for root as pathoscope
+
+	1. STILL NEED TO DO! - add command to dockerfile
+
+2. set username and password - username root, password pathoscope
+3. install pysqldb - http://sourceforge.net/projects/mysql-python/
+
+	git clone https://github.com/farcepest/MySQLdb1.git
+	cd MySQLdb1
+	python setup.py build
+	python setup.py install
+
+Issue with running mysql in a Docker container
+*Followed tutorial to setup database on desktop - will need to revisit docker install later
+ftp://ftp.heanet.ie/disk1/sourceforge/p/pa/pathoscope/archive/pathoscope2.0_tutorial.pdf
+
+Downloaded pathodb.sql.gz from ftp://oligomer.bumc.
+bu.edu/data/pathodb.sql.gz
+
+ran the following to setup the database
+mysql -u root -p
+<Enter root password>
+create DATABASE pathodb;
+create user pathoscope;
+grant all privileges on pathodb.* to pathoscope@”localhost” identified by 
+‘johnsonlab’;
+flush privileges;
+
+mysql -u pathoscope -p pathodb < pathodb.sql
+<Enter the following password when asked>
+johnsonlab
+
+
+
+4. run pathoscope lib with database info
+getting into docker container using bash
+
+
+
+
+5. getting into docker container
+sudo docker run -t -i -v /media/nolson/second/current_projects/micro_rm_dev:/micro_rm  micro_rm:mysql /bin/bash
+
+setting up database 
+when running mysql -u -p
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
+
+
+downloaded pathodb.sql and nt_ti.fa from pathoscope website
+
+#setting up pathodb
+gunzip -dc nt_it.gz >nt_ti.fa
+
+python ../pathoscope2/pathoscope/pathoscope.py LIB -genomeFile nt_ti.fa --online -dbhost localhost -dbuser pathoscope -dbpasswd johnsonlab -outPrefix micro_rm_patho_db
+
+
+python pathoscope.py MAP -U fastq -targetRefFiles nt.fasta  -outDir results -outAlign <input_name>.sam -expTag LT2_micro_rm
+used -U for single end and -1, -2 for paired end
+
+Test run on individual file
+../../../utilities/pathoscope2/pathoscope/pathoscope.py MAP -1 ../../../data/RM8375/MiSeq/fastq/SRR1555296_1.fastq -2 ../../../data/RM8375/MiSeq/fastq/SRR1555296_2.fastq -targetRefFiles ../../../utilities/patho_utils/nt_ti.fa -outDir SRR155296 -outAlign SRR155296.sam -expTag RM8375
+- started around 8:30 AM 11/20/2014
+ID
+
+REP
+
+also look into using pathoQC
