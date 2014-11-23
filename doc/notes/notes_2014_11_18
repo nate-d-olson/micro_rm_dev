@@ -82,5 +82,6 @@ ID - do not need to run if running REP
 REP
 need to run after pathomap finishes
 ../../../utilities/pathoscope2/pathoscope/pathoscope.py REP -dbhost localhost -dbuser pathoscope -dbpasswd johnsonlab outDir SRR1555296 -samfile SRR1555296/SRR155296.sam
+started 6:30 PM on 11/23 from home
 
 also look into using pathoQC
