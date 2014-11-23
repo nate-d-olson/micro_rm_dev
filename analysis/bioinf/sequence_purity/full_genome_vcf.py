@@ -18,6 +18,7 @@ def prep_bam_for_variant_calling(bam, ref, known_vcf):
     log_file.write("Fix mate pairs for: %s" % (bam))
     # fix mate pairs
     bam_fix = "tmp/" + bam_root + ".fix.bam"
+    #not for PGM
     subprocess.call(["samtools","fixmate",bam,bam_fix], stdout="log/bam_fix" + timestamp() + log_file)
     
     # sort
@@ -37,15 +38,15 @@ def prep_bam_for_variant_calling(bam, ref, known_vcf):
                                 "-targetIntervals", intervals, "-o", bam_realign]
     subprocess.call(realigner_command, stderr="log/bam_realign" + timestamp() + log_file)
     
-    ##%%## Base quality score recalibration
-    recal_table = "tmp/" + bam_root + ".recal.table"
-    bam_recal = "tmp/" + bam_root + "recal.bam"
-    base_recal_command = GATK_command + ["-T","BaseRecalibrator","-R",ref, "-knownSite",
-                                         known_vcf, "-I", bam_realign, "-o", recal_table]
-    subprocess.call(base_recal_command, stderr=log_file)
-    base_recal_print_command = GATK_command + ["-T","PrintReads","-R",ref, "-knownSite",
-                                         known_vcf, "-I", bam_realign,"--BSQR", recal_table,
-                                         recal_table,"-o", bam_recal]
+    ##%%## Base quality score recalibration - not necessary
+    # recal_table = "tmp/" + bam_root + ".recal.table"
+    # bam_recal = "tmp/" + bam_root + "recal.bam"
+    # base_recal_command = GATK_command + ["-T","BaseRecalibrator","-R",ref, "-knownSite",
+    #                                      known_vcf, "-I", bam_realign, "-o", recal_table]
+    # subprocess.call(base_recal_command, stderr=log_file)
+    # base_recal_print_command = GATK_command + ["-T","PrintReads","-R",ref, "-knownSite",
+    #                                      known_vcf, "-I", bam_realign,"--BSQR", recal_table,
+    #                                      recal_table,"-o", bam_recal]
 
 def main(ref, known_vcf, vcf_filename, bams_to_process):
     # processing multiple bams

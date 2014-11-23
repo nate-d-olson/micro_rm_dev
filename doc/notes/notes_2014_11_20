@@ -38,3 +38,36 @@ no error when rerunning the install script
 error with Ray not MPI
 
 Issues with minikraken database - tried downloading multiple times and still received an error regarding opening the database.
+
+Running tests
+run_pipeline_test.sh - issue with Krona tools
+run_test2.sh issue with nb_classify
+run_test_fast.sh - error cannot locate KronaTools.pm
+run_test_amphora.sh - error with KronaTools when calling ImportPhylosift 
+
+
+Error with syntax error: bad fd number 
+/bin/sh link to dash changed to bash following recomendations on 
+http://stackoverflow.com/questions/15809060/sh-syntax-error-bad-fd-number
+```sudo mv /bin/sh /bin/sh.orig
+sudo ln -s /bin/bash /bin/sh```
+
+issue with KronaTools install - manually added links to perl scripts KronaTools directory between scirpts and bin
+
+for error with fcb_models
+downloaded from metamos cbcb ftp site extracted on laptop and used rsync to transfer to desktop into metaAMOS utilities/models directory
+
+found potential bug in the KronaTools install script
+
+for Ray install added MPI to path 
+	sudo apt-get install libopenmpi-dev
+	reran pyhton INSTALL.py imetAMOS 
+	able to install Ray!
+after fixing bug with krona perl script able to run run_pipeline_test.sh
+
+FRCbam install error related to boost
+apt-get install libboost-system-dev libboost-isostreams-dev
+still not able to install
+
+installing CA - gmake not 
+running test_ima.sh - 

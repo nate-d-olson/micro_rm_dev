@@ -70,8 +70,17 @@ used -U for single end and -1, -2 for paired end
 Test run on individual file
 ../../../utilities/pathoscope2/pathoscope/pathoscope.py MAP -1 ../../../data/RM8375/MiSeq/fastq/SRR1555296_1.fastq -2 ../../../data/RM8375/MiSeq/fastq/SRR1555296_2.fastq -targetRefFiles ../../../utilities/patho_utils/nt_ti.fa -outDir SRR155296 -outAlign SRR155296.sam -expTag RM8375
 - started around 8:30 AM 11/20/2014
-ID
+- indexing finished around 1 PM 11/21/2014
+Error with run, output directory needs to exist
+rerun after mkdir SRR1555296
+../../../utilities/pathoscope2/pathoscope/pathoscope.py MAP -1 ../../../data/RM8375/MiSeq/fastq/SRR1555296_1.fastq -2 ../../../data/RM8375/MiSeq/fastq/SRR1555296_2.fastq -targetRefFiles ../../../utilities/patho_utils/micro_rm_patho_db_ti.fa -indexDir ../../../utilities/patho_utils/ -outDir SRR1555296 -outAlign SRR155296.sam -expTag RM8375
+-started around 1:30 PM 11/21/2014
+-appending alignment files started at 7:16PM
+
+ID - do not need to run if running REP
 
 REP
+need to run after pathomap finishes
+../../../utilities/pathoscope2/pathoscope/pathoscope.py REP -dbhost localhost -dbuser pathoscope -dbpasswd johnsonlab outDir SRR1555296 -samfile SRR1555296/SRR155296.sam
 
 also look into using pathoQC

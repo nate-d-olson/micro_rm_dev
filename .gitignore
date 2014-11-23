@@ -20,5 +20,5 @@ utilities/pathoscope*
 utilities/metAMOS*
 
 #filetypes
+#bowtie2 indexed files
 *bt2
-*bz2
