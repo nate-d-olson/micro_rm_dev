@@ -71,3 +71,73 @@ still not able to install
 
 installing CA - gmake not 
 running test_ima.sh - 
+
+
+### imetAMOS run
+error with SRR1555300
+*****************************************************************
+*************************ERROR***********************************
+During findorfs, the following command failed with return code 2:
+>> /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/prokka/bin/prokka  --outdir /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structurm: cannot remove ‘/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Logs/findorfs.ok’: No such file or directory
+Traceback (most recent call last):
+  File "./runPipeline", line 984, in <module>
+    verbose = 1)
+  File "/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py", line 2965, in pipeline_run
+    raise job_errors
+RethrownJobError: 
+    
+    
+    
+    Exception #1
+      'exceptions.TypeError(exceptions must be old-style classes or derived from BaseException, not NoneType)' raised in ...
+       Task = def validate.Validate(...):
+       Job  = [[abyss.91.faa, idba-ud.91.faa, masurca.91.faa, sga.91.faa, soapdenovo2.91.faa, spades.91.faa, velvet.91.faa] -> [validate.ok]]
+    
+    Traceback (most recent call last):
+      File "/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py", line 625, in run_pooled_job_without_exceptions
+        return_value =  job_wrapper(param, user_defined_work_func, register_cleanup, touch_files_only)
+      File "/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py", line 491, in job_wrapper_io_files
+        ret_val = user_defined_work_func(*param)
+      File "/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/validate.py", line 690, in Validate
+        FindORFS("%s/Assemble/out/%s.contig.cvg"%(_settings.rundir, _settings.PREFIX), "%s/Assemble/out/%s.faa"%(_settings.rundir, _settings.PREFIX))
+      File "/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/findorfs.py", line 380, in FindORFS
+        findFastaORFs(_orf, "%s/FindORFS/in/%s.asm.contig"%(_settings.rundir, _settings.PREFIX), "%s.ctg.fna"%(_settings.PREFIX), "%s.ctg.faa"%(_settings.PREFIX), "%s.ctg.gene.cvg"%(_settings.PREFIX), "%s.ctg.gene.map"%(_settings.PREFIX), _min_ctg_len, _min_ctg_cvg)
+      File "/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/findorfs.py", line 337, in findFastaORFs
+        run_process(_settings, "%s/prokka %s --outdir %s/FindORFS/out/%s.prokka --prefix %s --force %s"%(_settings.PROKKA,"--fast" if _run_fast else "",  _settings.rundir, _settings.PREFIX, _settings.PREFIX, contigs), "FindORFS")
+      File "/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/utils.py", line 1145, in run_process
+        raise
+    TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType
+    
+    
+re/SRR155300/FindORFS/out/proba.prokka --prefix proba --force /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/FindORFS/in/proba.asm.contig
+
+*************************DETAILS***********************************
+Last 10 commands run before the error (/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Logs/COMMANDS.log)
+|2014-11-25 05:44:09| ln /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/.asm.tigr /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.asm.tigr
+|2014-11-25 05:44:09| unlink /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.contig.cnt
+|2014-11-25 05:44:09| ln /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/.contig.cnt /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.contig.cnt
+|2014-11-25 05:44:09| unlink /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.contig.cvg
+|2014-11-25 05:44:09| ln /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/.contig.cvg /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.contig.cvg
+|2014-11-25 05:44:09| unlink /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.afg
+|2014-11-25 05:44:09| rm /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Logs/findorfs.ok
+|2014-11-25 05:44:09| unlink /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/FindORFS/in/proba.asm.contig
+|2014-11-25 05:44:09| ln /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.asm.contig /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/FindORFS/in/proba.asm.contig
+|2014-11-25 05:44:11| /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/prokka/bin/prokka  --outdir /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/FindORFS/out/proba.prokka --prefix proba --force /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/FindORFS/in/proba.asm.contig
+
+Last 10 lines of output (/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Logs/FINDORFS.log)
+[05:44:10] Determined parallel version is 20130822
+[05:44:10] Looking for 'prodigal' - found /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/prokka/bin/../binaries/linux/prodigal
+[05:44:10] Determined prodigal version is 2.60
+[05:44:10] Looking for 'sed' - found /bin/sed
+[05:44:10] Looking for 'signalp' - found /usr/local/bin/signalp
+[05:44:11] Determined signalp version is 4.1
+[05:44:11] Looking for 'tbl2asn' - found /usr/local/bin/tbl2asn
+[05:44:11] Determined tbl2asn version is 23.9
+[05:44:11] Using genetic code table 11.
+[05:44:11] '/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/FindORFS/in/proba.asm.contig' is not a readable non-empty FASTA file
+
+Please veryify input data and restart MetAMOS. If the problem persists please contact the MetAMOS development team.
+*************************ERROR***********************************
+*****************************************************************[0m
+Oops, MetAMOS finished with errors! see text in red above for details.
+

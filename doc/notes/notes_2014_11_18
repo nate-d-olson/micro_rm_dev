@@ -84,3 +84,5 @@ need to run after pathomap finishes
 ../../../utilities/pathoscope2/pathoscope/pathoscope.py REP -dbhost localhost -dbuser pathoscope -dbpasswd johnsonlab outDir SRR1555296 -samfile SRR1555296/SRR155296.sam
 
 also look into using pathoQC
+
+Patho rep still running 11/25/2014 8:20 AM - 13.2% of ram
