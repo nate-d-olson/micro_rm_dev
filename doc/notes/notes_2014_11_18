@@ -87,3 +87,20 @@ started 6:30 PM on 11/23 from home
 also look into using pathoQC
 
 Patho rep still running 11/25/2014 8:20 AM - 13.2% of ram
+
+Need to run patho ID before patho report
+started at 8:50 AM 11/25/2014
+nolson@Selenium:/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_purity/SRR1555296$ python ../../../../utilities/pathoscope2/pathoscope/pathoscope.py ID -alignFile SRR155296.sam -fileType sam -outDir ./ -expTag RM8375-ID
+
+finished at 11:27 inlcuding updated sam file
+
+started report as 12:40 PM 11/25/2014
+python ../../../../utilities/pathoscope2/pathoscope/pathoscope.py REP -dbhost localhost -dbuser pathoscope -dbpasswd johnsonlab -outDir ./ -samfile updated_SRR155296.sam
+
+Used up all ram and froze computer after generating updated tsv, need to look into what is going on ....
+
+Installing pathoqc
+python pathoqc.py -1 ../../../data/RM8375/MiSeq/fastq/SRR1555296_1.fastq -2 ../../../data/RM8375/MiSeq/fastq/SRR1555296_2.fastq -s Illumina -p 8 -o ../../../analysis/bioinf/genome_structure/SRR1555296
+
+errors with pp install
+able to run from within the pathoqc directory ....

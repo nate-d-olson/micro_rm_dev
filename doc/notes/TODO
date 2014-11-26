@@ -1,5 +1,5 @@
 TODO
-1. pathoscope MySQL database
+X pathoscope MySQL database
 2. bwa mapping MiSeq
 	1. script includes metadata parsing
 3. variant calling pipeline
@@ -7,9 +7,9 @@ TODO
 5. change to not need sudo to start docker
 6. make sure software src code is in software directory
 7. Email Keith and Evan to find out more about the curation process for their database
-8. Minikraken to metAMOS 
+X Minikraken to metAMOS 
 9. setup seperate HD for micro_RM
-10. pathoscope bowtie2 index files to patho_utils
+X pathoscope bowtie2 index files to patho_utils
 11. install pathoQC
 
 
