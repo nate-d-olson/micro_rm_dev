@@ -320,6 +320,12 @@ Potential issue with inaccurate estimate in insert size or bug in code ...
 Ran SRR1555302
 ./initPipeline -q -1 ../../data/RM8375/MiSeq/fastq/SRR1555302_1.fastq -2 ../../data/RM8375/MiSeq/fastq/SRR1555302_2.fastq -i 500:700 -W imetAMOS -d ../../analysis/bioinf/genome_structure/SRR1555302
 ./runPipeline -v -d ../../analysis/bioinf/genome_structure/SRR1555302/
+
 Started run SRR1555304
 ./initPipeline -q -1 ../../data/RM8375/MiSeq/fastq/SRR1555304_1.fastq -2 ../../data/RM8375/MiSeq/fastq/SRR1555304_2.fastq -i 500:700 -W imetAMOS -d ../../analysis/bioinf/genome_structure/SRR1555304
 ./runPipeline -v -d ../../analysis/bioinf/genome_structure/SRR1555304/
+
+Started run SRR1555306 11/27/2014 10 AM
+./initPipeline -q -1 ../../data/RM8375/MiSeq/fastq/SRR1555306_1.fastq -2 ../../data/RM8375/MiSeq/fastq/SRR1555306_2.fastq -i 500:700 -W imetAMOS -d ../../analysis/bioinf/genome_structure/SRR1555306
+./runPipeline -v -d ../../analysis/bioinf/genome_structure/SRR1555306/
+used screen -L to log activity and ctl+a+d to detach screen
