@@ -15,25 +15,9 @@ MAINTAINER Nate Olson
 VOLUME ["/micro_rm"]
 
 #install required libs
-RUN apt-get update;\
-    apt-get install -y -q git build-essential autotools-dev automake \
+RUN apt-get install -y -q git build-essential autotools-dev automake \
                           pkg-config curl wget bwa unzip zlib1g-dev \
                           libncurses5-dev libyaml-dev cpanminus r-base
-    # mkdir /install && cd install;\
-    # apt-get install python-setuptools python-dev -y -q;\
- #    cd /install ;\
- #    git clone https://github.com/timothyjlaurent/cloudbiolinux.git ;\
- #    cd cloudbiolinux ;\
- #    git checkout 1a1fc199f8a3729e0231dd8413e33bbea1a0f1b9 ;\
- #    ls ;\
- #    pwd;\
- #    python setup.py build ;\
- #    sudo python setup.py install;\
- #    cd cloudbiolinux;\
- #    fab -f fabfile.py -H localhost -c config/fabricrc.txt install_biolinux:packages; \
- #    fab -f fabfile.py -H localhost install_biolinux:libraries && apt-get clean ;\
-	# fab -f fabfile.py -H localhost -c install_biolinux:cleanup ;\
-	# rm -rf /var/lib/apt/lists/* /var/tmp/* /var/tmp/*
 
 # setup Rprofile
 RUN echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile
@@ -66,20 +50,6 @@ RUN wget http://sourceforge.net/projects/samtools/files/samtools/1.1/bcftools-1.
     tar -xaf bcftools-1.1.tar.bz2 && rm -rf bcftools-1.1.tar.bz2 ;\
     cd bcftools-1.1;\
     make && ln -f -s `pwd`/bcftools /usr/bin && cd /software
-# install reapr
-# install Perl modules pre-reqs
-RUN cpanm -v File::Basename File::Copy File::Spec  File::Spec::Link Getopt::Long List::Util
-RUN wget ftp://ftp.sanger.ac.uk/pub/resources/software/reapr/Reapr_1.0.17.tar.gz;\
-         tar -xf Reapr_1.0.17.tar.gz && rm -rf Reapr_1.0.17.tar.gz;\
-    cd Reapr_1.0.17;\
-    bash install.sh && ln -f -s `pwd`/src/reapr.pl /usr/bin/reapr && cd /software
-
-# pathoscope2
-RUN wget http://sourceforge.net/projects/pathoscope/files/pathoscope_2.0.2_clinical_pathoscope_1.0.3.tar.gz  &&\
-        tar -xf pathoscope_2.0.2_clinical_pathoscope_1.0.3.tar.gz &&\
-        rm -rf pathoscope_2.0.2_clinical_pathoscope_1.0.3.tar.gz ;\
-    chmod -R 755 pathoscope2 && cd /software
-## not sure how to change to put in path
 
 #sratoolkit
 RUN wget http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.4.2-1/sratoolkit.2.4.2-ubuntu64.tar.gz &&\
@@ -88,6 +58,4 @@ RUN wget http://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.4.2-1/sratoolkit.2.4.2-ubun
         ln -f -s sratoolkit.2.4.2-ubuntu64/bin/fastq-dump.2.4.2 /usr/bin/fastq-dump;\
         cd /software
 
-
 # ### to do setup ipython notebook
-# need to install sratoolkit
