@@ -1,0 +1,9 @@
+root_dir=/media/nolson/second/current_projects/micro_rm_dev/
+fastq_dir=data/RM8375/
+qc_loc=utilities/pathoqc_v0.1.1/pathoqc/pathoqc.py
+patho_loc=utilities/pathoscope2/pathoscope/pathoscope.py
+n=8
+ref=utilities/patho_utils/micro_rm_patho_db_ti.fa
+index_dir=utilities/patho_utils/
+analysis_out_dir=analysis/bioinf/genome_purity
+datasets=SRR1555296:MiSeq,SRR1555297:MiSeq,SRR1555298:MiSeq,SRR1555299:MiSeq,SRR1555300:MiSeq,SRR1555301:MiSeq,SRR1555302:MiSeq,SRR1555303:MiSeq,SRR1555304:MiSeq,SRR1555305:MiSeq,SRR1555306:MiSeq,SRR1555307:MiSeq,SRR1555308:MiSeq,SRR1555309:MiSeq,SRR1555310:MiSeq,SRR1393710:PGM,SRR1393711:PGM,SRR1393713:PGM,SRR1393714:PGM,SRR1393716:PGM,SRR1393718:PGM,SRR1393719:PGM,SRR1393721:PGM
