@@ -10,15 +10,20 @@
 #datafiles
 data/*
 
+#dev
+dev/genome_purity
+
 #results
 analysis/bioinf/genome_structure/results
+analysis/bioinf/genome_structure/SRR*
 analysis/bioinf/genome_purity/SRR*
 
 #utilities
 utilities/patho_utils
 utilities/GenomeAnalysisTK.jar
-utilities/pathoscope*
-utilities/metAMOS*
+utilities/pathoqc_v0.1.1
+utilities/pathoscope2
+utilities/metAMOS-1.5rc3
 utilities/signalp-4.1
 utilities/src
 
