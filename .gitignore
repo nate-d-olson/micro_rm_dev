@@ -12,12 +12,15 @@ data/*
 
 #results
 analysis/bioinf/genome_structure/results
+analysis/bioinf/genome_purity/SRR*
 
 #utilities
 utilities/patho_utils
 utilities/GenomeAnalysisTK.jar
 utilities/pathoscope*
 utilities/metAMOS*
+utilities/signalp-4.1
+utilities/src
 
 #filetypes
 #bowtie2 indexed files

@@ -1,5 +1,5 @@
-## Objective setup MySQL database for pathoscope
-
+## Pathoscope install and pipeline development notes
+May want to revist and organize
 need to install PySQLdb - python packages
 http://sourceforge.net/projects/mysql-python/
 
@@ -104,3 +104,161 @@ python pathoqc.py -1 ../../../data/RM8375/MiSeq/fastq/SRR1555296_1.fastq -2 ../.
 
 errors with pp install
 able to run from within the pathoqc directory ....
+
+Using pathoscope to characterize sequence data from reference material charaterization
+
+#link to pathoscope
+PATHO=../../src/pathoscope2/pathoscope/pathoscope.py
+
+download the refseq database 
+
+documentation on databases
+ftp://ftp.ncbi.nlm.nih.gov/blast/db/README
+
+Downloaded 11/03/2014
+ftp://ftp.ncbi.nih.gov/blast/db/FASTA/nt.gz 20.5 Gb 
+moved to utilities directory
+md5sum ../../utilities/nt.gz 
+670e984e61faf2aa11a074316ab85fa2  ../../utilities/nt.gz
+
+Inititaing libary
+python $PATHO LIB -genomeFile ../../utilities/nt.gz -outPrefix ../../utilities/patho_nt_db
+
+Mapping S0h-1 dataset
+python $PATHO MAP -1 ../../data/RM8375/MiSeq/fastq/S0h-1_S1_L001_R1_001.fastq -2 ../../data/RM8375/MiSeq/fastq/S0h-1_S1_L001_R2_001.fastq -targetRefFiles ../../utilities/nt.fasta -indexDir ../../utilities
+
+Started around 10:30 am - indexing 11/4, finished ~ 4 pm 11/6
+
+Started mapping run ~4p 11/6, needs to map to the 20 split files
+
+for 11/7 - telework
+pathomap finished running - 200 + Gb of sam files
+
+running pathoid
+nohup python $PATHO ID --noUpdatedAlignFile -alignFile outalign.sam &
+started around 11:45 am 11/7
+
+running path report
+nohup python ../../src/pathoscope2/pathoscope/pathoscope.py REP -samfile outalign.sam &
+started 9 pm 11/7
+
+Still running 11/12 - need to generate MySql database
+	11/13 still running 17% of memory being used
+	11/14 still running 18.2% memory ...
+Still Running - 1:45 11/10
+Pathoscope tutorial
+http://www.microbiomejournal.com/content/supplementary/2049-2618-2-33-s5.pdf
+
+
+Setting up mysql db
+username root with not password
+mysql -u root -p
+<Enter root password>
+create DATABASE pathodb;
+create user pathoscope;
+grant all privileges on pathodb.* to pathoscope@”localhost” identified by 
+‘johnsonlab’;
+flush privileges;
+
+waiting for databases to download
+
+* Followed pathoscope tutorial to setup PathoDB
+ftp://ftp.heanet.ie/disk1/sourceforge/p/pa/pathoscope/archive/pathoscope2.0_tutorial.pdf
+	*  Authors provide a curated nt GenBank database created October 2013
+	*  Downloaded pathodb.sql.gz from ftp://oligomer.bumc.
+bu.edu/data/pathodb.sql.gz on 11/19/2014
+	* Downloaded nt sequence data from ftp://oligomer.
+bumc.bu.edu/data/nt_ti.fa.gz on 11/19/2014
+* Using bowtie 2 version 2.2.3 for mapping, version installed as part of biolinux8
+
+
+downloaded pathodb.sql and nt_ti.fa from pathoscope website
+
+#setting up pathodb
+gunzip -dc nt_it.gz >nt_ti.fa
+
+python ../pathoscope2/pathoscope/pathoscope.py LIB -genomeFile nt_ti.fa --online -dbhost localhost -dbuser pathoscope -dbpasswd johnsonlab -outPrefix micro_rm_patho_db
+
+
+python pathoscope.py MAP -U fastq -targetRefFiles nt.fasta  -outDir results -outAlign <input_name>.sam -expTag LT2_micro_rm
+used -U for single end and -1, -2 for paired end
+
+Test run on individual file
+../../../utilities/pathoscope2/pathoscope/pathoscope.py MAP -1 ../../../data/RM8375/MiSeq/fastq/SRR1555296_1.fastq -2 ../../../data/RM8375/MiSeq/fastq/SRR1555296_2.fastq -targetRefFiles ../../../utilities/patho_utils/micro_rm_patho_db_ti.fa -outDir SRR155296 -outAlign SRR155296.sam -expTag RM8375
+
+ID - if running patho report do not need to run ID
+
+
+REP
+
+also look into using pathoQC
+http://sourceforge.net/projects/pathoscope/files/pathoqc_v0.1.1.tar.gz/download
+
+* Started test run at 10:00 PM 12/4/2014
+* tomorrow 
+    * check run
+    * optimize - make sure using all 8 cores, or parallelize runs
+        * look into best way to optimize, paralleize multiple samples using a single core for each or running ID after map in parallel
+    * issue with defining the number of threads - change manually for now
+    * update readme with code for running the pipeline
+    * error with cleanup rm: cannot remove ‘/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_purity/SRR1393721/SRR1393721-utilities/patho_utils/micro_rm_patho_db_ti.*sam’: No such file or directory
+    * update code to that steps will not rerun
+
+* restarted text 8:30 AM 12/5/2015
+
+Using pathoscope to characterize sequence data from reference material charaterization
+
+#link to pathoscope
+PATHO=../../src/pathoscope2/pathoscope/pathoscope.py
+
+download the refseq database 
+
+documentation on databases
+ftp://ftp.ncbi.nlm.nih.gov/blast/db/README
+
+Downloaded 11/03/2014
+ftp://ftp.ncbi.nih.gov/blast/db/FASTA/nt.gz 20.5 Gb 
+moved to utilities directory
+md5sum ../../utilities/nt.gz 
+670e984e61faf2aa11a074316ab85fa2  ../../utilities/nt.gz
+
+Inititaing libary
+python $PATHO LIB -genomeFile ../../utilities/nt.gz -outPrefix ../../utilities/patho_nt_db
+
+Mapping S0h-1 dataset
+python $PATHO MAP -1 ../../data/RM8375/MiSeq/fastq/S0h-1_S1_L001_R1_001.fastq -2 ../../data/RM8375/MiSeq/fastq/S0h-1_S1_L001_R2_001.fastq -targetRefFiles ../../utilities/nt.fasta -indexDir ../../utilities
+
+Started around 10:30 am - indexing 11/4, finished ~ 4 pm 11/6
+
+Started mapping run ~4p 11/6, needs to map to the 20 split files
+
+for 11/7 - telework
+pathomap finished running - 200 + Gb of sam files
+
+running pathoid
+nohup python $PATHO ID --noUpdatedAlignFile -alignFile outalign.sam &
+started around 11:45 am 11/7
+
+running path report
+nohup python ../../src/pathoscope2/pathoscope/pathoscope.py REP -samfile outalign.sam &
+started 9 pm 11/7
+
+Still running 11/12 - need to generate MySql database
+	11/13 still running 17% of memory being used
+	11/14 still running 18.2% memory ...
+Still Running - 1:45 11/10
+Pathoscope tutorial
+http://www.microbiomejournal.com/content/supplementary/2049-2618-2-33-s5.pdf
+
+
+Setting up mysql db
+username root with not password
+mysql -u root -p
+<Enter root password>
+create DATABASE pathodb;
+create user pathoscope;
+grant all privileges on pathodb.* to pathoscope@”localhost” identified by 
+‘johnsonlab’;
+flush privileges;
+
+waiting for databases to download

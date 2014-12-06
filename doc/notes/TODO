@@ -10,6 +10,9 @@ X pathoscope MySQL database
 X Minikraken to metAMOS 
 9. setup seperate HD for micro_RM
 X pathoscope bowtie2 index files to patho_utils
-11. install pathoQC
+X install pathoQC
+12. pathoscope pipeline
+13. pathoscope docker
+14. process samples using pathoscope
 
 
