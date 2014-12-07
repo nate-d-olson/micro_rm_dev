@@ -30,3 +30,4 @@ utilities/src
 #filetypes
 #bowtie2 indexed files
 *bt2
+.Rproj.user
