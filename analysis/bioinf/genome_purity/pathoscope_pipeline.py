@@ -36,10 +36,11 @@ def pathomap_command(ref_path, index_dir, fastq1, out_dir, path_pathoscope,expta
     stderr_file = open(out_dir + "/pathomap"+ time.strftime("-%Y-%m-%d-%H-%M-%S.stder"),'w')
     
     ## output sam file
-    out_sam =  re.sub('[fastq,fq]', 'sam', fastq1)
+    out_sam =  re.sub('fastq|fq', 'sam', fastq1.split("/")[-1])
     
     ## pathoscope command root
-    pathomap_command = ["python",path_pathoscope,'MAP','-targetRefFiles',ref_path,'-indexDir',index_dir,'-outDir',out_dir,'-outAlign', out_sam, '-expTag', exptag]
+    pathomap_command = ["python",path_pathoscope,'--verbose','MAP', '-targetRefFiles',ref_path,\
+                        '-indexDir',index_dir,'-outDir',out_dir,'-outAlign', out_sam, '-expTag', exptag]
     
     if fastq2:
         pathomap_command = pathomap_command + ['-1',fastq1, '-2',fastq2]
@@ -57,7 +58,7 @@ def pathoid_command(path_pathoscope, input_sam, out_dir, exptag):
     stderr_file = open(out_dir + "/pathoid"+ time.strftime("-%Y-%m-%d-%H-%M-%S.stder"),'w')
     
     ## pathoscope command root
-    pathoid_command = ["python",path_pathoscope,'ID','-alignFile',input_sam,'-fileType',
+    pathoid_command = ["python",path_pathoscope,'--verbose','ID', '-alignFile',input_sam,'-fileType',
                        'sam','-outDir',out_dir,'--outMatrix','-expTag', exptag]
     subprocess.call(pathoid_command, stdout=log_file,stderr=stderr_file)
 
