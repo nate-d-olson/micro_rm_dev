@@ -6,4 +6,4 @@ n=8
 ref=utilities/patho_utils/micro_rm_patho_db_ti.fa
 index_dir=utilities/patho_utils/
 analysis_out_dir=analysis/bioinf/genome_purity
-datasets=SRR1393710_trim:PGM
+datasets=SRR1555296T:MiSeq,SRR1393710T:PGM

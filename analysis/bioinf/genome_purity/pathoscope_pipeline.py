@@ -21,7 +21,7 @@ def pathoqc_command(fastq1, out_dir, path_pathoqc, plat, thread_num, fastq2=Fals
     
     pathoqc_command = ["python",path_pathoqc]
     
-    if fastq2:
+    if fastq2 != None:
         pathoqc_command = pathoqc_command + ['-1',fastq1, '-2',fastq2,'-s',plat,'-p',str(thread_num),'-o',out_dir]
     else:
         pathoqc_command = pathoqc_command + ['-1',fastq1,'-s',plat,'-p',str(thread_num),'-o',out_dir]
