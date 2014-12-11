@@ -329,3 +329,9 @@ Started run SRR1555306 11/27/2014 10 AM
 ./initPipeline -q -1 ../../data/RM8375/MiSeq/fastq/SRR1555306_1.fastq -2 ../../data/RM8375/MiSeq/fastq/SRR1555306_2.fastq -i 500:700 -W imetAMOS -d ../../analysis/bioinf/genome_structure/SRR1555306
 ./runPipeline -v -d ../../analysis/bioinf/genome_structure/SRR1555306/
 used screen -L to log activity and ctl+a+d to detach screen
+restarted pipeline with -f Scaffold and -f FunctionalAnnotation
+
+Started run SRR1555308 11/27/2014 11 PM
+./initPipeline -q -1 ../../data/RM8375/MiSeq/fastq/SRR1555308_1.fastq -2 ../../data/RM8375/MiSeq/fastq/SRR1555308_2.fastq -i 500:700 -W imetAMOS -d ../../analysis/bioinf/genome_structure/SRR1555308
+./runPipeline -v -d ../../analysis/bioinf/genome_structure/SRR1555308/
+
