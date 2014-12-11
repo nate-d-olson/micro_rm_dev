@@ -1,0 +1,7 @@
+11/27/2014
+setup docker environment to for developing whole genome sequence variant calling
+
+docker run -d -p 443:8888 -v ~/Desktop/micro_rm_dev:/notebooks -e "PASSWORD=micro_rm_pw" varcall_notebook
+Starting container, access notebook using https://localhost:8888
+
+note uses the new language agnostic version of ipython notebook
