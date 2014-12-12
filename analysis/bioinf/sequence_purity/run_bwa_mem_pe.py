@@ -2,6 +2,9 @@
 # coding: utf-8
 
 # ## Mapping MiSeq Paired End Reads Using bwa
+# To Do
+# 1. remove tmp after run
+# 2. add run_id to log files
 
 import sys
 import re
