@@ -15,5 +15,6 @@ X pathoscope pipeline
 13. pathoscope docker
 14. process samples using pathoscope - started 12/09 6 PM
 15. Add header to scripts
+16. convert pathoscope sam files to bams
 
 
