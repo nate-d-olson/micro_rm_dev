@@ -12,11 +12,13 @@ data/*
 
 #dev
 dev/genome_purity
+dev/sequence_purity
 
 #results
 analysis/bioinf/genome_structure/results
 analysis/bioinf/genome_structure/SRR*
 analysis/bioinf/genome_purity/SRR*
+analysis/bioinf/sequence_purity/mapping
 
 #utilities
 utilities/patho_utils
@@ -26,6 +28,8 @@ utilities/pathoscope2
 utilities/metAMOS-1.5rc3
 utilities/signalp-4.1
 utilities/src
+utilities/pilon*
+utilities/resources
 
 #filetypes
 #bowtie2 indexed files

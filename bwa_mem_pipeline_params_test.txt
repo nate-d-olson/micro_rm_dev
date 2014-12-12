@@ -1,0 +1,6 @@
+root_dir=/notebooks/
+fastq_dir=data/RM8375/
+n=8
+ref=data/RM8375/ref/CFSAN008157.HGAP.fasta
+analysis_out_dir=dev/sequence_purity
+datasets=SRR1555296T:MiSeq:0:1

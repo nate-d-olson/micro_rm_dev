@@ -1,0 +1,42 @@
+Plans for variant calling
+1. mapping reads  to HGAP reference
+	* MiSeq BWA
+		* TODO - python script with merge
+	* PGM - TMAP from Torrent Suite, may want to install in docker
+2. run Pilon
+3. Compare PGM and MiSeq Pilon - generate revise ref
+4. remap and re-run pilon for additional possible changes, iterate steps 1-4 till equilibrium
+5. mpileup for for base purity analysis
+
+Approach
+1. python script with functions for
+	* bwa-mem
+	* adding headers
+	* sorting and indexing
+	* merging bams
+	* running pilon
+	* mpileup
+2. script for running pilon and mapping procedure
+
+Getting started 
+* startup boot2docker
+	* within boot2docker terminal 
+		`docker run -d -p 443:8888 -v ~/Desktop/micro_rm_dev:/notebooks -e "PASSWORD=micro_rm_pw" varcall_notebook`
+* in browser localhost:8888
+
+
+bwa_mem_pe.py has functions for running bwa for Illumina PE data, run_bwa_mem_pe.py runs datasets based on parameters provided input file
+see bwa_mem_pipeline_params.txt for example
+
+run within docker 
+starting docker container `docker run -i -t -v ~/Desktop/micro_rm_dev:/notebooks varcall_notebook sh'
+
+inside the container run `python run_bwa_mem_pe.py bwa_mem_pipeline_params.txt` from the analysis/bioinf/sequence_purity directory
+
+Improvements 
+1. sending command to docker without entering the commandline
+2. add the run id to log files or store in seperate directories
+
+Next Steps
+1. Code for running pilon
+2. function merging bams
