@@ -1,0 +1,75 @@
+---
+title: "Pathoscope Initial Analysis"
+author: "Nate Olson"
+date: "12/16/2014"
+output: html_document
+---
+Objective:
+Approach:
+
+
+### Loading Data
+```{r}
+library(knitr)
+library(ggplot2)
+source('gather_pathoscope.R')
+df <- join(pathoDF, sampleDF)
+```
+
+## Top matches
+The organisms with the top matches were all *Salmonella enterica subspecies enterica*, and the porportion of reads assigned to the top matches was statistically similiar for all replicates (library, and vials).  
+```{r, fig.height=10}
+ggplot(df[df$Final_Guess > 0.001,]) + geom_boxplot(aes(y = Final_Guess, x = plat, color = Genome)) + scale_y_log10() +  facet_wrap(~plat, scale = "free_x") + theme_bw()
+```
+
+Top proportion of assignments for all datasets were correct to the subspecies level.  LT2 was the top portion for all PGM datasets but not for MiSeq.
+
+### Top Assignment Repeatability
+```{r, fig.height=10}
+ggplot(df[df$Final_Guess > 0.1,]) + geom_jitter(aes(y = Final_Guess, x = plat, color = Genome))  + theme_bw() + theme(legend.position = "bottom", legend.direction = "vertical")
+```
+
+The top hits for the replicate datasets for the individual platformsthe two datasets statistically similar.
+```{r}
+for(i in c("MiSeq","PGM")){
+  print(i)
+  print(t.test(df$Final_Guess[df$Final_Guess > 0.1 & df$plat == i]))
+}
+```
+
+### Analysis of contaminants
+Defining contaminants as non-*Salmonella*, sequence purity and genomic sturcture analysis are better suited for evaluating the presence of closely related species within the material.
+```{r}
+df$Contam <- !(grepl("Salmonella", df$Genome))
+```
+
+```{r}
+ggplot(df[df$Contam == TRUE,]) + geom_density(aes(x = Final_Guess), alpha = 0.25) + geom_rug(aes(x = Final_Guess)) + facet_wrap(~plat) + geom_vline(aes(xintercept = 1), color = "blue") + scale_x_log10() + theme_bw()
+```
+
+Blue vertical line, at 1 to serve as a reference point.
+
+### Contaminant Summary
+```{r}
+df_contam <- ddply(df[df$Contam == TRUE,],.variables = .(Genome, plat),summarize, median=median(Final_Guess), max=max(Final_Guess),min=min(Final_Guess)) %>% arrange(desc(median))
+```
+```{r,echo=FALSE,results='asis'}
+kable(df_contam[df_contam$median > 1e-10,],digits = 10, format='html')
+```
+
+Frequency a specific contaminant was observed in a dataset
+```{r}
+ggplot(df[df$Contam == TRUE & df$Genome %in% df_contam$Genome[df_contam$median > 1e-10],]) + geom_raster(aes(x = sampleID, y = Genome, Fill=Final_Best_Hit_Read_Numbers)) + facet_wrap(~plat, scale= "free_x")
+```
+
+Need to filter out Genomes only present in one dataset and order by number of replicates present
+
+### Summary by org
+```{r}
+df_summary <- ddply(df,.variables = .(Genome, plat),summarize, median=median(Final_Guess), max=max(Final_Guess),min=min(Final_Guess)) %>% arrange(desc(median))
+```
+
+```{r,echo=FALSE,results='asis'}
+kable(df_summary, format='html')
+```
+

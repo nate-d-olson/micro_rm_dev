@@ -1,6 +1,6 @@
 TODO
 X pathoscope MySQL database
-2. bwa mapping MiSeq
+X bwa mapping MiSeq
 	1. script includes metadata parsing
 3. variant calling pipeline
 4. documentation
@@ -13,8 +13,8 @@ X pathoscope bowtie2 index files to patho_utils
 X install pathoQC
 X pathoscope pipeline
 13. pathoscope docker
-14. process samples using pathoscope - started 12/09 6 PM
+X process samples using pathoscope - started 12/09 6 PM
 15. Add header to scripts
-16. convert pathoscope sam files to bams
+X. convert pathoscope sam files to bams
 
 
