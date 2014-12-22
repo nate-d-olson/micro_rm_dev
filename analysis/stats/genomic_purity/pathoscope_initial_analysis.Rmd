@@ -12,12 +12,13 @@ Approach:
 ```{r}
 library(knitr)
 library(ggplot2)
+library(outliers)
 source('gather_pathoscope.R')
 df <- join(pathoDF, sampleDF)
 ```
 
 ## Top matches
-The organisms with the top matches were all *Salmonella enterica subspecies enterica*, and the porportion of reads assigned to the top matches was statistically similiar for all replicates (library, and vials).  
+The organisms with the top matches were all *Salmonella enterica subspecies enterica*, and the porportion of reads assigned to the top matches was statistically similiar for all replicates (library, and vials).
 ```{r, fig.width=8}
 ggplot(df[df$Final_Guess > 0.001,]) + geom_boxplot(aes(y = Final_Guess, x = plat, color = Genome)) + scale_y_log10() +  facet_wrap(~plat, scale = "free_x") + theme_bw() + theme(legend.position = "bottom", legend.direction = "vertical")
 ```
@@ -29,19 +30,40 @@ Top proportion of assignments for all datasets were correct to the subspecies le
 ggplot(df[df$Final_Guess > 0.1,]) + geom_jitter(aes(y = Final_Guess, x = plat, color = Genome))  + theme_bw() + theme(legend.position = "bottom", legend.direction = "vertical")
 ```
 
-The top hits for the replicate datasets for the individual platformsthe two datasets statistically similar.
+None of the predicted proportion values for the top hit for the sequencing platforms are outliers.
 ```{r}
 for(i in c("MiSeq","PGM")){
   print(i)
-  print(t.test(df$Final_Guess[df$Final_Guess > 0.1 & df$plat == i]))
+  print(dixon.test(df$Final_Guess[df$Final_Guess > 0.1 & df$plat == i]))
 }
 ```
 
-### Analysis of contaminants
-Defining contaminants as non-*Salmonella*, sequence purity and genomic sturcture analysis are better suited for evaluating the presence of closely related species within the material.
+### Proportion of Salmonella
+Contaminants defined as any reads not taxonomically classified as Salmonella, the genus level cutoff is based on prior analysis of results pairwwise mixtures of simulated reads from seven different organisms.  
 ```{r}
 df$Contam <- !(grepl("Salmonella", df$Genome))
 ```
+
+Total proportion of **Salomonella** reads
+```{r}
+df_salmonella <- df[df$Contam == FALSE,] %>% ddply(.variables = .(sampleID, plat), summarize, total_prop = sum(Final_Guess))
+```
+Note that their are only 23 datasets, one missing MiSeq ....
+
+Comparison of Total Salmonella by dataset.
+```{r}
+ggplot(df_salmonella) + geom_point(aes(x = sampleID, y = total_prop, color = plat)) + theme_bw() + theme(axis.text.x = element_text(angle = 90))
+```
+
+Comparison of total proportions by platform
+```{r}
+t.test(x = df_salmonella$total_prop[df_salmonella$plat == "PGM"], y = df_salmonella$total_prop[df_salmonella$plat == "MiSeq"])
+
+```
+
+
+### Analysis of contaminants
+Defining contaminants as non-*Salmonella*, sequence purity and genomic sturcture analysis are better suited for evaluating the presence of closely related species within the material.
 
 ```{r}
 ggplot(df[df$Contam == TRUE,]) + geom_density(aes(x = Final_Guess), alpha = 0.25) + geom_rug(aes(x = Final_Guess)) + facet_wrap(~plat) + geom_vline(aes(xintercept = 1), color = "blue") + scale_x_log10() + theme_bw()
