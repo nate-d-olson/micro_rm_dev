@@ -35,3 +35,9 @@ utilities/resources
 #bowtie2 indexed files
 *bt2
 .Rproj.user
+*vcf
+*idx
+*wig
+*changes
+*fasta
+*bed
