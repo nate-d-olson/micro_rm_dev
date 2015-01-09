@@ -5,6 +5,7 @@
 # To Do
 # 1. remove tmp after run
 # 2. add run_id to log files
+# 3. add parameters/ help with verbose command
 
 import sys
 import re
@@ -23,18 +24,19 @@ def define_run_params(run_info,parameters):
     run_params['vial'] = run_info_list[2]
     run_params['rep'] = run_info_list[3]
     
-    fastq_root = parameters['root_dir'] + parameters['fastq_dir'] +                                    run_info_list[1] + '/'+ 'fastq'+'/'
+    fastq_root = parameters['root_dir'] + parameters['fastq_dir'] + run_info_list[1] + '/'+ 'fastq'+'/'
     if run_info_list[1] == "MiSeq":
         run_params['fastq1'] = fastq_root + run_info_list[0] + "_1.fastq"
         run_params['fastq2'] = fastq_root + run_info_list[0] + "_2.fastq"
     else:
         run_params['fastq1'] = fastq_root + run_info_list[0] + ".fastq"
         run_params['fastq2'] = None
-        
+    
+    ref_name = parameters['ref'].split("/")[-1].replace(".fasta","_")
     run_params['out_dir'] = parameters['root_dir'] + parameters['analysis_out_dir']
-    run_params['sam'] = run_params['out_dir'] + "/tmp/" + run_params['run_id'] + ".sam"
-    run_params['bam'] = run_params['out_dir'] + "/tmp/" + run_params['run_id'] + ".bam"
-    run_params['sorted_bam'] = run_params['out_dir'] + "/"+ run_params['run_id'] + ".bam"
+    run_params['sam'] = run_params['out_dir'] + "/tmp/" + ref_name + run_params['run_id'] + ".sam"
+    run_params['bam'] = run_params['out_dir'] + "/tmp/" + ref_name + run_params['run_id'] + ".bam"
+    run_params['sorted_bam'] = run_params['out_dir'] + "/"+ ref_name + run_params['run_id'] + ".bam"
     run_params['read_group'] = "@RG\tID:%s\tCN:%s\tLB:%s\tPL:%s\tSM:%s" %(run_params['run_id'],
                                                                           parameters['center'],
                                                                           run_params['vial']+"-"+run_params['rep'],
@@ -80,7 +82,7 @@ def read_dat(filename):
     return parameters
 
 def main(filename):
-    #read run parameters from input file and process using pathoscope
+    #read run parameters from input file and map reads to reference using bwa
     parameters = read_dat(filename)
     
     # creating temp directory

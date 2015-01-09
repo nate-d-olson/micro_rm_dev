@@ -1,0 +1,16 @@
+# Micro RM8375 Analysis
+## Objective
+1. Work on summary of pathoscope results
+2. Run pilon using LT2 reference genome, pilon change MiSeq, and pilon Change PGM reference genomes
+3. Whole genome comparison using parsnp
+
+## Running pilon
+1. Change pipeline to add reference genome seq name to output results
+	* modified run_bwa_mem_pe.py to include reference genome name in output filenames
+	* Test run of two datasets, test worked started running full LT2
+	* will wait to re-run the PGM data, either need to create a pipeline for running tmap or run using the torrent server
+	* note docker container date is the date built not the current date
+
+2. run different reference genomes
+	* started run of LT2 for all MiSeq data at 12:17 PM
+	

@@ -19,6 +19,7 @@ analysis/bioinf/genome_structure/results
 analysis/bioinf/genome_structure/SRR*
 analysis/bioinf/genome_purity/SRR*
 analysis/bioinf/sequence_purity/mapping
+analysis/bioinf/sequence_purity/mapping_2015_01_09
 
 #utilities
 utilities/patho_utils
