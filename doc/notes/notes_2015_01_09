@@ -17,6 +17,7 @@
 	* note docker container date is the date built not the current date
 
 2. run different reference genomes
+<<<<<<< HEAD
 	* Mapping MiSeq reads to LT2, HGAP_MiSeq, and HGAP_PGM using run_bwa_mem_pe.py
 3. merging bams 
 	* merging bam files in ipython notebook code below, similar command run for all three references
@@ -36,8 +37,18 @@
                 --changes --vcf --tracks \
                 --fix "all" --output HGAP_MiSeq.miseq
     
+=======
+	* started run of LT2 for all MiSeq data at 12:17 PM, successful completion
+	* started HGAP_MiSeq at 1:00 PM
+
+
+>>>>>>> c238c6df31f6fb57d5b41d469bb26a472831faac
 
 ## Other
 	* Issue with ipython notebook formats and conda on laptop, may need to reinstall anaconda ...
 		* Will hold off until better idea of what needs to be done
+<<<<<<< HEAD
 	* new version of ipython notebook jupyter
+=======
+
+>>>>>>> c238c6df31f6fb57d5b41d469bb26a472831faac
