@@ -2,7 +2,7 @@
 title: "RM8375 Genomic Purity Assessment"
 author: "Nate Olson"
 date: "1/9/2015"
-output: html_document
+output: pdf_document
 ---
 Objective: Evaluate the genomic purity of RM8375, *Salmonella enterica LT2*. 
 Approach: Identification of contaminants performed using Pathoscope for taxonomic read classification for short read (MiSeq and PGM) data generated for the reference materials.
@@ -116,3 +116,10 @@ kable(contam_summary)
 
 
 *Escherichia coli* was identified as the most common contaminant which is not unexpected as it is a well documented contaminant in DNA extraction reagents and sequencing reagents.
+
+## Conclusions
+- Low levels of contaminants detected in all datasets.
+- The mean proportion of total reads classified as beloning to the genus *Salmonella* was over 99.99% for both platforms.
+- Potential next steps
+    - look at the reads mapped to contaminants to look for bioinformatic errors
+    - look to see if containant reads are mapping to the reference and lowering purity values for consensus base calls.
