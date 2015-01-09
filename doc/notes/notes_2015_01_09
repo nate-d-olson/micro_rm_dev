@@ -4,6 +4,11 @@
 2. Run pilon using LT2 reference genome, pilon change MiSeq, and pilon Change PGM reference genomes
 3. Whole genome comparison using parsnp
 
+## Pathoscope Results Summary
+* pathoscope_analysis_v2.Rmd
+* Found missing dataset - MiSeq vial 7 library 2, SRR1555311, will need to run
+* Summarized the pathoscope contaminant results with Rmarkdown file.
+
 ## Running pilon
 1. Change pipeline to add reference genome seq name to output results
 	* modified run_bwa_mem_pe.py to include reference genome name in output filenames
@@ -12,5 +17,27 @@
 	* note docker container date is the date built not the current date
 
 2. run different reference genomes
-	* started run of LT2 for all MiSeq data at 12:17 PM
-	
+	* Mapping MiSeq reads to LT2, HGAP_MiSeq, and HGAP_PGM using run_bwa_mem_pe.py
+3. merging bams 
+	* merging bam files in ipython notebook code below, similar command run for all three references
+
+	%%bash
+	ls ../sequence_purity/mapping_2015_01_09/HGAP_MiSeq*bam >HGAP_MiSeq.miseq.bams
+	samtools merge -b HGAP_MiSeq.miseq.bams HGAP_MiSeq_merged.bam
+	samtools index HGAP_MiSeq_merged.bam
+
+4. Running pilon
+	* Issue running pilon in Docker container on laptop, memmory issue
+	* running from the command line 
+
+		java -Xmx8G -jar ../../../utilities/pilon-1.10.jar \
+                --genome ../../../data/RM8375/ref/HGAP_MiSeq.fasta \
+                --frags HGAP_MiSeq_merged.bam \
+                --changes --vcf --tracks \
+                --fix "all" --output HGAP_MiSeq.miseq
+    
+
+## Other
+	* Issue with ipython notebook formats and conda on laptop, may need to reinstall anaconda ...
+		* Will hold off until better idea of what needs to be done
+	* new version of ipython notebook jupyter

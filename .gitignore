@@ -1,4 +1,4 @@
-# History files
+story files
 .Rhistory
 
 # Example code in package build process
@@ -32,6 +32,7 @@ utilities/src
 utilities/pilon*
 utilities/resources
 utilities/gingr.app
+
 #filetypes
 #bowtie2 indexed files
 *bt2
@@ -42,3 +43,5 @@ utilities/gingr.app
 *changes
 *fasta
 *bed
+*bam
+*bai
