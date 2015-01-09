@@ -3,24 +3,19 @@
 
 # Example code in package build process
 *-Ex.R
-
 # R data files from past sessions
 .Rdata
-
 #datafiles
 data/*
-
 #dev
 dev/genome_purity
 dev/sequence_purity
-
 #results
 analysis/bioinf/genome_structure/results
 analysis/bioinf/genome_structure/SRR*
 analysis/bioinf/genome_purity/SRR*
 analysis/bioinf/sequence_purity/mapping
 analysis/bioinf/sequence_purity/mapping_2015_01_09
-
 #utilities
 utilities/patho_utils
 utilities/GenomeAnalysisTK.jar
@@ -42,3 +37,4 @@ utilities/gingr.app
 *changes
 *fasta
 *bed
+packrat/lib*/
