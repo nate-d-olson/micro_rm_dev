@@ -19,4 +19,5 @@ Requirements mapped sequence files
 	3.2. open ipython notebook`localhost:8888` in browser, password "micro_rm_pw"
 	3.3 merge bam files from individual datasets using samtools
 		see notebook_2014_01_09_Pilon.pynb
-	3.4 run pilon on merged bams - error running using Docker, memory issue, running from the commandline.
+	3.4 run pilon on merged bams - error running using Docker, memory issue, running from the commandline. Check out http://stackoverflow.com/questions/24422123/change-boot2docker-memory-assignment, blog post on changing memory usage for boot2docker
+	
