@@ -1,0 +1,17 @@
+# used to link bam files in data directory to pgm_mapping directory - for consensus base analysis, had to copy for docker
+cp /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_001_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393710.bam;
+cp /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_002_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393711.bam;
+cp /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_003_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393713.bam;
+cp /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_004_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393714.bam;
+cp /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_005_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393716.bam;
+cp /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_006_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393718.bam;
+cp /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_007_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393719.bam;
+cp /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_008_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393721.bam;
+# ln -s /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_001_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393710.bam;
+# ln -s /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_002_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393711.bam;
+# ln -s /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_003_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393713.bam;
+# ln -s /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_004_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393714.bam;
+# ln -s /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_005_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393716.bam;
+# ln -s /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_006_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393718.bam;
+# ln -s /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_007_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393719.bam;
+# ln -s /media/nolson/second/current_projects/micro_rm_dev/data/RM8375/PGM/bam/IonXpress_008_R_2014_03_23_18_22_09_user_SN2-17-8375_Orthogonal_Measurement_1_Run_2_PacBioRef2.bam pgm_mapping/SRR1393721.bam;

@@ -37,11 +37,11 @@ def define_run_params(run_info,parameters):
     run_params['sam'] = run_params['out_dir'] + "/tmp/" + ref_name + run_params['run_id'] + ".sam"
     run_params['bam'] = run_params['out_dir'] + "/tmp/" + ref_name + run_params['run_id'] + ".bam"
     run_params['sorted_bam'] = run_params['out_dir'] + "/"+ ref_name + run_params['run_id'] + ".bam"
-    run_params['read_group'] = "@RG\tID:%s\tCN:%s\tLB:%s\tPL:%s\tSM:%s" %(run_params['run_id'],
+    run_params['read_group'] = "@RG\tID:%s\tCN:%s\tLB:%s\tPL:%s\tSM:%s" %(parameters['RM'],
                                                                           parameters['center'],
                                                                           run_params['vial']+"-"+run_params['rep'],
                                                                           run_params['plat'],
-                                                                          parameters['RM'])
+                                                                          parameters['run_id'])
     return run_params
 
 def run_bwa_mem_pipeline(run_params,bwa_params):

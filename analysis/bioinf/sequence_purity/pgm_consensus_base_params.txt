@@ -1,0 +1,9 @@
+root_dir=/notebooks/
+bam_dir=analysis/bioinf/sequence_purity/pgm_mapping
+n=8
+ref=/notebooks/data/RM8375/ref/CFSAN008157.HGAP.fasta
+analysis_out_dir=analysis/bioinf/sequence_purity/consensus_base_pgm/
+center=NIST
+RM=RM8375
+datasets=SRR1393710:PGM:0:1,SRR1393711:PGM:1:1,SRR1393714:PGM:3:1,SRR1393716:PGM:4:1,SRR1393718:PGM:5:1,SRR1393719:PGM:6:1,SRR1393721:PGM:7:1
+full=SRR1393710:PGM:0:1,SRR1393711:PGM:1:1,SRR1393713:PGM:2:1,SRR1393714:PGM:3:1,SRR1393716:PGM:4:1,SRR1393718:PGM:5:1,SRR1393719:PGM:6:1,SRR1393721:PGM:7:1
