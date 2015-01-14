@@ -168,7 +168,7 @@ def main(filename):
         run_params = define_run_params(i,parameters)
     
         markdup_files[run_params['plat']] += [run_params['markdup_file']]
-            
+
         run_consensus_base_pipeline(run_params, parameters)
        
     # pileups by platform
