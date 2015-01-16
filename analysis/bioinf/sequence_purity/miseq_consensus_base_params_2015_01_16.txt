@@ -1,0 +1,11 @@
+root_dir=/notebooks/
+bam_dir=analysis/bioinf/sequence_purity/mapping_2015_01_15
+n=8
+ref=/notebooks/data/RM8375/ref/CFSAN008157.HGAP.fasta
+ref_root=CFSAN008157.HGAP
+analysis_out_dir=analysis/bioinf/sequence_purity/consensus_base_miseq_2015_01_16/
+center=NIST
+RM=RM8375
+test_datasets=SRR1555296:MiSeq:0:1
+datasets=SRR1555297:MiSeq:0:2,SRR1555298:MiSeq:1:1,SRR1555299:MiSeq:1:2,SRR1555300:MiSeq:2:1,SRR1555301:MiSeq:2:2,SRR1555302:MiSeq:3:1,SRR1555303:MiSeq:3:2,SRR1555304:MiSeq:4:1,SRR1555305:MiSeq:4:2,SRR1555306:MiSeq:5:1,SRR1555307:MiSeq:5:2,SRR1555308:MiSeq:6:1,SRR1555309:MiSeq:6:2,SRR1555310:MiSeq:7:1
+other_dataset=SRR1555311:MiSeq:7:2
