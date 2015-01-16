@@ -46,6 +46,7 @@ def define_run_params(run_info,pipeline_params):
     run_params['vial'] = run_info_list[2]
     run_params['rep'] = run_info_list[3]       
     run_params['out_dir'] = pipeline_params['root_dir'] + pipeline_params['analysis_out_dir']
+<<<<<<< HEAD
 
     # run specific log directory
     run_params['log_dir'] = run_params['out_dir'] + "logs" + "/" + run_params['run_id']
@@ -55,6 +56,18 @@ def define_run_params(run_info,pipeline_params):
                             pipeline_params['ref_root'] +"_"+ run_params['run_id']
     run_params['bam'] = pipeline_params['root_dir'] + pipeline_params['bam_dir'] + "/" + \
                             pipeline_params['ref_root'] +"_"+ run_params['run_id'] + ".bam"
+=======
+    run_params['log_dir'] = run_params['out_dir'] + "logs" + "/" + run_parms['run_id']
+    bam_root = pipeline_params['root_dir'] + pipeline_params['analysis_out_dir'] + "tmp/" + run_params['run_id']
+
+    # including is statement for when reference sequence root is not included in the bam file name
+    if pipeline_params['ref_root'] != "":
+        ref_root = pipeline_params['ref_root'] + "_"
+    else:
+        ref_root = ""
+    bam_root = pipeline_params['root_dir'] + pipeline_params['analysis_out_dir'] + "tmp/" + ref_root + run_params['run_id']
+    run_params['bam'] = pipeline_params['root_dir'] + pipeline_params['bam_dir'] + "/" + pipeline_params['ref_root'] + "_" +run_params['run_id'] + ".bam"
+>>>>>>> dfdbf41564a59a4d73f2e6e7fa23522f3ab2676d
     run_params['fix_file'] = bam_root + "_fix.bam"
     run_params['header_file'] = bam_root + "_header.bam"
     run_params['sort_file'] = bam_root + "_sort.bam"
@@ -76,6 +89,15 @@ def define_run_params(run_info,pipeline_params):
 
 def dedup_realign_single_bam(run_params, pipeline_params):
     ''' Processing single bam file'''
+<<<<<<< HEAD
+=======
+
+    # creating run specific log directory
+    subprocess.call(['mkdir','-p',pipeline_params['root_dir']+ \
+                                  pipeline_params['analysis_out_dir']+ \
+                                  "/logs/" + run_params['run_id'] + "/"])
+    
+>>>>>>> dfdbf41564a59a4d73f2e6e7fa23522f3ab2676d
     if run_params['plat'] == "MiSeq":
         bam_group_sort(in_bam = run_params['bam'], 
                        out_bam = run_params['group_sort_file'], 
@@ -135,12 +157,14 @@ def run_consensus_base_pipeline(run_params,pipeline_params):
 
 # In[28]:
 
-def genome_pileups(parameters, markdup_files):
+def genome_pileups(pipeline_parameters, markdup_files):
     
     for plat in ["MiSeq", "PGM"]:
-        out_dir = parameters['root_dir'] + parameters['analysis_out_dir']
-        vcf = out_dir + "/" + parameters['RM'] + "-" + plat + ".vcf"
-        genome_calls_mpileup(bams=markdup_files[plat],ref=parameters['ref'],vcf_file=vcf,log_dir=out_dir)
+        out_dir = pipeline_params['root_dir'] + pipeline_params['analysis_out_dir']
+        vcf = out_dir + "/" + pipeline_params['RM'] + "-" + plat + ".vcf"
+        genome_calls_mpileup(bams=markdup_files[plat],
+                             ref=pipeline_params['ref'],
+                             vcf_file=vcf,log_dir=out_dir)
 
 
 # In[8]:
@@ -149,12 +173,12 @@ def read_dat(filename):
     #process input file with configuration information
     from collections import defaultdict
     
-    parameters = defaultdict(str)
+    pipeline_params = defaultdict(str)
     with open(filename,'r') as f:
         for line in f:
             param = line.strip().split("=")
-            parameters[param[0]] = param[1]
-    return parameters
+            pipeline_params[param[0]] = param[1]
+    return pipeline_params
 
 
 # In[29]:
@@ -174,11 +198,19 @@ def main(filename):
         run_params = define_run_params(i,pipeline_params)
     
         markdup_files[run_params['plat']] += [run_params['markdup_file']]
+<<<<<<< HEAD
             
         run_consensus_base_pipeline(run_params, pipeline_params)
        
     # pileups by platform
     genome_pileups(pipeline_params, markdup_files)
+=======
+
+        #run_consensus_base_pipeline(run_params, pipeline_params)
+    print markdup_files
+    # pileups by platform
+    #genome_pileups(pipeline_params, markdup_files)
+>>>>>>> dfdbf41564a59a4d73f2e6e7fa23522f3ab2676d
 
 if __name__ == '__main__':
     main(sys.argv[1])

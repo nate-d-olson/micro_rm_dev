@@ -27,7 +27,6 @@ utilities/src
 utilities/pilon*
 utilities/resources
 utilities/gingr.app
-
 #filetypes
 #bowtie2 indexed files
 *bt2

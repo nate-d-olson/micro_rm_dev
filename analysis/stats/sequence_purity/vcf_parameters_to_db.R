@@ -43,10 +43,17 @@ parse_vcf_filename <- function(vcf_filename){
 }
 
 ## calculating position probabilites and purity
-process_vcf_purity <- function (vcf_file, vcf_db){
+process_vcf_purity <- function (vcf_file, vcf_db, tbl_name){
   # get metadata
-  vcf_meta <- parse_vcf_filename(vcf_file)
-  tbl_name <- str_replace(string = unname(vcf_meta["name"]),pattern = "-",replacement = "_")
+  #vcf_meta <- parse_vcf_filename(vcf_file)
+#   if(grepl("MiSeq", vcf_file)){
+#     tbl_name <- "cb_miseq"
+#   }else if{
+#     tbl_name <- "cb_pgm"
+#   }else{
+#     warning("MiSeq or PGM not in file name: ")
+#   }
+  #tbl_name <- str_replace(string = unname(vcf_meta["name"]),pattern = "-",replacement = "_")
   #if(tbl_name %in% dbListTables(vcf_db$con)){ # can potentially replace dbListTables with src_tbls
    # return("Next Dataset")
   #}
@@ -70,7 +77,7 @@ process_vcf_purity <- function (vcf_file, vcf_db){
 #   
   #generate datatable
   vcf_tbl <- data.table(CHROM = str_sub(string = rownames(info(vcf)),start = 1,end = 8), 
-                        POS = ranges(vcf)@start, WIDTH = ranges(vcf)@width, 
+                        POS = ranges(vcf)@start, WIDTH = ranges(vcf)@width, INDEL=info(vcf)$INDEL,
                         DP = info(vcf)$DP, QUAL = vcf@fixed$QUAL, PUR, PUR_prob97, PUR_Q2.5, PUR_Q50, PUR_Q97.5)
 
    I16$POS <- vcf_tbl$POS
@@ -85,13 +92,18 @@ process_vcf_purity <- function (vcf_file, vcf_db){
 }
 
 #initiate sqlite database
-vcf_db <- src_sqlite("../../data/RM8375/vcf_db_split_2.sqlite", create = TRUE)
+vcf_db <- src_sqlite("../../../data/RM8375/RM8375.sqlite", create = TRUE)
 
 #processing all mpileup vcf files
-vcf_dir_list <- list.files(c("../../data//RM8375//PGM//mpileup/mpileup_vcf/","../../data//RM8375//MiSeq//mpileup/mpileup_vcf/"),full.names = TRUE)
-vcf_dir_list <- grep("Undetermined",vcf_dir_list,invert =  TRUE,value = TRUE)
-vcf_dir_list <- grep("nomatch",vcf_dir_list,invert = TRUE, TRUE,value = TRUE)
+#vcf_dir_list <- list.files(c("../../bioinf/sequence_purity/consensus_base_miseq/RM8375-MiSeq.vcf"),full.names = TRUE)
+# vcf_dir_list <- c("../../bioinf/sequence_purity/consensus_base_miseq_2015_01_14/RM8375-MiSeq.vcf", "../../bioinf/sequence_purity/consensus_base_pgm_2015_01_14/RM8375-PGM.vcf")
+# 
+# for(vcf in vcf_dir_list){
+#   process_vcf_purity(vcf_file = vcf, vcf_db)
+# }
 
-for(vcf in vcf_dir_list){
-  process_vcf_purity(vcf_file = vcf, vcf_db)
-}
+process_vcf_purity(vcf_file = "../../bioinf/sequence_purity/consensus_base_miseq_2015_01_14/RM8375-MiSeq.vcf", 
+                   vcf_db, "vcf_miseq")
+
+process_vcf_purity(vcf_file = "../../bioinf/sequence_purity/consensus_base_pgm_2015_01_14/RM8375-PGM.vcf", 
+                   vcf_db, "vcf_pgm")
