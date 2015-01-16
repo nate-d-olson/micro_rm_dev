@@ -48,7 +48,14 @@ def define_run_params(run_info,parameters):
     run_params['out_dir'] = parameters['root_dir'] + parameters['analysis_out_dir']
     run_params['log_dir'] = run_params['out_dir'] + "logs"
     bam_root = parameters['root_dir'] + parameters['analysis_out_dir'] + "tmp/" + run_params['run_id']
-    run_params['bam'] = parameters['root_dir'] + parameters['bam_dir'] + "/" + run_params['run_id'] + ".bam"
+
+    # including is statement for when reference sequence root is not included in the bam file name
+    if parameters['ref_root'] != "":
+        ref_root = parameters['ref_root'] + "_"
+    else:
+        ref_root = ""
+    bam_root = parameters['root_dir'] + parameters['analysis_out_dir'] + "tmp/" + ref_root + run_params['run_id']
+    run_params['bam'] = parameters['root_dir'] + parameters['bam_dir'] + "/" + parameters['ref_root'] + "_" +run_params['run_id'] + ".bam"
     run_params['fix_file'] = bam_root + "_fix.bam"
     run_params['header_file'] = bam_root + "_header.bam"
     run_params['sort_file'] = bam_root + "_sort.bam"
