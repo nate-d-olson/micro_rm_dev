@@ -1,0 +1,64 @@
+---
+title: "Initial Purity Analysis"
+author: "Nate Olson"
+date: "01/15/2015"
+output: html_document
+---
+
+### Objective
+Perform an initial analysis of base level results based purity of base calls at individual genome positions.
+
+### Loading data
+```{r, echo=FALSE, message=FALSE}
+library(stringr) 
+library(dplyr) 
+library(tidyr)
+library(ggplot2)
+```
+
+```{r}
+vcf_db <- src_sqlite("../../../data/RM8375/RM8375.sqlite", create = TRUE)
+vcf_pgm <- tbl(vcf_db,"full_pgm")
+# vcf_miseq <- tbl(vcf_db,"cb_miseq")
+```
+
+### Munging data
+1. filter indels
+2. select specific columns
+3. join pgm and miseq
+```{r}
+vcf_pgm_plat <- vcf_pgm %>% select(CHROM,POS,SAMPLE,DP4)
+
+  group_by(c(CHROM,POS)) %>% summarize(count = n())
+vcf_pgm_trim %>% ungroup() %>%
+   group_by(count) %>% summarize(n = n())
+```
+
+The does not appear to be any indels on vcf file
+
+Testing out join
+```{r}
+vcf_pgm_trim <- vcf_pgm %>%
+  select(CHROM,POS,PUR) %>%
+  mutate(plat = "pgm") %>%
+  collect()
+vcf_miseq_trim <-vcf_miseq %>%
+  select(CHROM,POS,PUR) %>%
+  mutate(plat = "miseq") %>%
+  collect()
+vcf_full <- bind_rows(vcf_miseq_trim,vcf_pgm_trim)
+```
+
+Making sure datasets are unique
+```{r}
+vcf_comp <- vcf_full %>%
+  spread(key=plat, value=PUR) %>%
+  mutate(plat_diff = miseq - pgm)
+sum(vcf_comp$plat_diff)
+```
+
+### EDA
+```{r}
+ggplot(vcf_full) + geom_density(aes(x = PUR, color = plat), alpha = 0.25)
+```
+
