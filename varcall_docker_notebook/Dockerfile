@@ -5,9 +5,21 @@ MAINTAINER Nate Olson <nolson@nist.gov>
 #modified ipython/notebook
 
 # Adding Bioinformatics Tools
-RUN apt-get install -y -q git automake \
-                          pkg-config curl wget bwa unzip zlib1g-dev \
-                          libncurses5-dev libyaml-dev openjdk-7-jdk openjdk-7-jre
+RUN apt-get update
+RUN apt-get install -y -q   \ 
+                            #git \
+                            automake \
+                            #pkg-config \
+                            curl \
+                            wget \
+                            bwa \
+                            unzip \
+                            #zlib1g-dev \
+                            libbz2-dev \
+                            libncurses5-dev \
+                            libyaml-dev \
+                            openjdk-7-jdk \
+                            openjdk-7-jre
 # install bowtie2 
 RUN wget http://downloads.sourceforge.net/project/bowtie-bio/bowtie2/2.2.2/bowtie2-2.2.2-linux-x86_64.zip;\
     unzip bowtie2-2.2.2-linux-x86_64.zip && rm -rf bowtie2-2.2.2-linux-x86_64.zip;\
@@ -30,9 +42,18 @@ RUN wget http://sourceforge.net/projects/samtools/files/samtools/1.1/bcftools-1.
     cd bcftools-1.1;\
     make && ln -f -s `pwd`/bcftools /usr/bin && cd ../
 
-# install Plion
+# install Pilon
 RUN wget https://github.com/broadinstitute/pilon/releases/download/v1.10/pilon-1.10.jar;\
-    chmod +x pilon-1.10.jar; ln -s `pwd`/pilon-1.10.jar /usr/local/bin/
+    chmod +x pilon-1.10.jar; \
+    ln -s `pwd`/pilon-1.10.jar /usr/local/bin/
+
+# install TMAP
+RUN git clone git://github.com/iontorrent/TMAP.git; \
+	cd TMAP; \
+	git submodule init && git submodule update; \
+	sh autogen.sh && ./configure && make; \
+	make install && ln -f -s `pwd`/tmap /usr/bin && cd ../
+
 
 VOLUME /notebooks
 WORKDIR /notebooks
