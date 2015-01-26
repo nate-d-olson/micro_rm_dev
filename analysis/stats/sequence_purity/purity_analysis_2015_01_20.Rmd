@@ -1,0 +1,128 @@
+---
+title: "Consensus Base Analysis V1"
+author: "Nate Olson"
+date: "01/20/2015"
+output:
+  html_document:
+    keep_md: yes
+---
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(ggplot2)
+library(ggvis)
+library(knitr)
+```
+
+## Loading data
+```{r}
+vcf_db <- src_sqlite("../../../data/RM8375/RM8375-v01.sqlite", create = TRUE)
+plat_pur <- tbl(vcf_db, "pur_join") %>% collect()
+```
+
+Note that the pgm but not the miseq is summarized by run
+
+## Platform Pooled Purity distributions
+### PGM
+```{r, message=FALSE}
+plat_pur %>%
+  ggvis(~plat2) %>%
+  layer_histograms() %>%
+  add_axis("x", title = "High Quality Base Purity")
+```
+
+### Purity less than 0.98
+```{r, message=FALSE}
+plat_pur %>% filter(plat2 < 0.98) %>%
+  ggvis(~plat2) %>%
+  layer_histograms() %>%
+  add_axis("x", title = "High Quality Base Purity")
+```
+
+### MiSeq
+```{r, message=FALSE}
+plat_pur %>%
+  ggvis(~plat1) %>%
+  layer_histograms() %>%
+  add_axis("x", title = "High Quality Base Purity") 
+```
+
+### Purity less than 0.98
+```{r, message=FALSE}
+plat_pur %>% filter(plat1 < 0.98) %>%
+  ggvis(~plat1) %>%
+  layer_histograms() %>%
+  add_axis("x", title = "High Quality Base Purity")
+```
+
+### Purity Scatter Plot
+```{r}
+plat_pur %>%
+  filter(plat1 < 0.98 | plat2 < 0.98) %>%
+  ggvis(x = ~plat1, y = ~plat2) %>%
+  layer_points(fill = ~CHROM) %>%
+  add_axis("x", title = "MiSeq") %>%
+  add_axis("y", title = "PGM")
+```
+
+Table listing positions with purity values less than 0.98 on both platforms
+```{r}
+low_conf <- plat_pur %>% filter(plat1 < 0.98, plat2 < 0.98)
+kable(low_conf)
+```
+
+
+```{r, echo=FALSE}
+#Basic Purity Based Conf Labels
+#low_conf <- mutate(low_conf, conf="lc") %>% select(CHROM, POS, conf)
+# apply_conf <- function(tbl_name, conf_table){
+#   tbl_name  %>% right_join(conf_table) %>% 
+#                 mutate(conf = ifelse(conf != "lc","hc","hc"))
+# }
+```
+
+
+### Per sample analysis
+```{r}
+pgm_pur <- tbl(vcf_db, "pur_pgm") %>% select(CHROM, POS, SAMPLE, Pur) %>% collect()
+miseq_pur <- tbl(vcf_db, "pur_miseq")  %>% select(CHROM, POS, SAMPLE, Pur) %>% collect()
+```
+
+
+```{r, echo=FALSE}
+# Applying basic conf labels
+#pgm_pur <- apply_conf(pgm_pur, low_conf) - slow skipping for now
+#miseq_pur <- apply_conf(miseq_pur, low_conf)
+```
+
+#### PGM by Sample
+##### Purity less than 0.98
+```{r, message=FALSE}
+ggplot(pgm_pur[pgm_pur$Pur < 0.98,]) + geom_histogram(aes(x = Pur)) + facet_wrap(~SAMPLE) + theme_bw()
+```
+
+##### Purity less than 0.90
+```{r, message=FALSE}
+ggplot(pgm_pur[pgm_pur$Pur < 0.90,]) + geom_histogram(aes(x = Pur)) + facet_wrap(~SAMPLE) + theme_bw()
+```
+
+### MiSeq by Sample
+##### Purity less than 0.98
+```{r, message=FALSE}
+ggplot(miseq_pur[miseq_pur$Pur < 0.98,]) + geom_histogram(aes(x = Pur)) + facet_wrap(~SAMPLE) + theme_bw()
+```
+
+##### Purity less than 0.90
+```{r, message=FALSE}
+ggplot(miseq_pur[miseq_pur$Pur < 0.90,]) + geom_histogram(aes(x = Pur)) + facet_wrap(~SAMPLE) + theme_bw()
+```
+
+
+## Session Info
+```{r}
+sessionInfo()
+```
+
+
+
+
