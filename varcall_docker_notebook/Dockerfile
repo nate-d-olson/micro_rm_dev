@@ -54,6 +54,19 @@ RUN git clone git://github.com/iontorrent/TMAP.git; \
 	sh autogen.sh && ./configure && make; \
 	make install && ln -f -s `pwd`/tmap /usr/bin && cd ../
 
+# install prinseq - using fastqc instead
+# RUN wget http://resources.ohnosequences.com/prinseq/prinseq-lite-0.20.3.tar.gz;\
+#     tar -xzf prinseq-lite-0.20.3.tar.gz;\
+#     #rm prinseq-lite-0.20.3.tar.gz;\
+#     chmod +x prinseq-lite-0.20.3/*.pl;\
+#     ln -sf `pwd`/prinseq-lite-0.20.3/*.pl /usr/bin/ && cd ../
+
+# install fastqc
+RUN wget http://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.2.zip;\
+    unzip fastqc_v0.11.2.zip && cd FastQC;\
+    chmod +x fastqc;\
+    ln -sf `pwd`/fastqc /usr/bin/ && cd ../
+
 
 VOLUME /notebooks
 WORKDIR /notebooks
